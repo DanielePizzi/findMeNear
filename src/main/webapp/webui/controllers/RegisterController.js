@@ -3,22 +3,22 @@ angular.module('App.Auth')
 
 RegisterController.$inject = ['$location', '$scope', '$rootScope', 'AuthService', 'FlashMessage'];
 function RegisterController($location, $scope, $rootScope, AuthService, FlashMessage) {
-    var rc = this;
+//    var rc = this;
     console.log('register controller');
-    rc.register = function (admin) {
-        console.log('received the register event for user: '+rc.user.username);
+    $scope.register = function (admin) {
+        console.log('received the register event for user: '+$scope.user.username);
         $rootScope.isSubmitted = true;
-        rc.dataLoading = true;
-        rc.user.admin = admin;
-        AuthService.register(rc.user, function (response) {
+        $scope.dataLoading = true;
+        $scope.user.admin = admin;
+        AuthService.register($scope.user, function (response) {
             if (response.code==200) {
                 AuthService.createJWTToken(response.result.user, response.result.token);
                 AuthService.setCredentials();
                 $location.path('/app');
             } else {
-                rc.error = response.result;
-                rc.details = response.details;
-                rc.dataLoading = false;
+                $scope.error = response.result;
+                $scope.details = response.details;
+                $scope.dataLoading = false;
                 $rootScope.isSubmitted = false;
             }
         });

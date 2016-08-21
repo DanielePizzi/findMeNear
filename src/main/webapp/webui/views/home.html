@@ -1,4 +1,38 @@
 <div ng-include="'webui/views/common/header.html'"></div>
-		<h1> CIAO A TUTTI </h1>
+		<h2>Google Maps Trovami</h2>
+
+    <!-- search/go to current location -->
+    <div class="text-right">
+        <div class="input-append text-right">
+            <input type="text" ng-model="search"/>
+            <button class="btn" type="button" ng-click="geoCode()" ng-disabled="search.length == 0" title="search" >
+              &nbsp;<i class="glyphicon glyphicon-search"></i>
+            </button>
+            <button class="btn" type="button" ng-click="gotoCurrentLocation()" title="current location">
+              &nbsp;<i class="glyphicon glyphicon-home"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- map -->
+    <app-map style="height:400px;margin:12px;box-shadow:0 3px 25px black;"
+        center="loc"
+        markers="pointOfInterest"
+    > 
+    </app-map>
+
+    <!-- current location -->
+    <div class="text-info text-right">
+        {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
+    </div>
+
+    <!-- list of airports -->
+    <div class="container-fluid">
+        <div class="span3 btn" 
+            ng-repeat="a in pointOfInterest"
+            ng-click="gotoLocation(a.lat, a.lon)">
+            <b>{{a.code}}</b>: {{a.name}}
+        </div>
+    </div>		
     <div ng-include="'webui/views/common/footer.html'"></div>
 </div>
