@@ -49,6 +49,7 @@ function HomeController($scope, $location) {
    ];
 };
 
+
 //Formattazione dei numeri per la latitudine (40.46... => "40°27'44"N")
 App.filter('lat', function () {
    return function (input, decimals) {

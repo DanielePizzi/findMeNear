@@ -55,6 +55,10 @@ webProjectbModule.config(['$routeProvider',
                 templateUrl: 'webui/views/dashboard.html',
                 controllerAs: 'app'
             })
+            .when('/app', {
+                controller: 'MapsController',
+                templateUrl: 'webui/views/maps.html',
+                })
 
             .otherwise({ redirectTo: '/home' });
     }
@@ -74,7 +78,7 @@ webProjectbModule.run(['$rootScope', '$location', '$cookieStore', '$http',
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             console.log('received event: ' + event + ' from: ' + current + ' to go to next: ' + next);
             // redirect to login page if not logged in and trying to access a restricted page
-            var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/admin.login', '/adm.register', '/admin', '/app', '/dashboard']) === -1;
+            var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/admin.login', '/adm.register', '/admin', '/app', '/dashboard','/maps']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
             $rootScope.currentUser = $rootScope.globals.currentUser;
             if (restrictedPage && !loggedIn) {

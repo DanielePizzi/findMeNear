@@ -1,7 +1,9 @@
 <div ng-include="'webui/views/common/header.html'"></div>
+ <div class="container-fluid">
 		<h2>Google Maps Trovami</h2>
+	
 
-    <!-- search/go to current location -->
+    <!-- cerca e vai alla posizione desiderata -->
     <div class="text-right">
         <div class="input-append text-right">
             <input type="text" ng-model="search"/>
@@ -14,19 +16,20 @@
         </div>
     </div>
 
-    <!-- map -->
-    <app-map style="height:400px;margin:12px;box-shadow:0 3px 25px black;"
+    <!-- mappa -->
+    <app-map style="height:600px;margin:15px;box-shadow:0 3px 25px black;"
         center="loc"
         markers="pointOfInterest"
     > 
     </app-map>
 
-    <!-- current location -->
+    <!-- posizione corrente -->
     <div class="text-info text-right">
         {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
     </div>
-
-    <!-- list of airports -->
+    
+    <h2>Punti di Interesse personali</h2>
+    <!-- Lista dei punti di interesse -->
     <div class="container-fluid">
         <div class="span3 btn" 
             ng-repeat="a in pointOfInterest"
@@ -34,5 +37,6 @@
             <b>{{a.code}}</b>: {{a.name}}
         </div>
     </div>		
+    </div>
     <div ng-include="'webui/views/common/footer.html'"></div>
 </div>
