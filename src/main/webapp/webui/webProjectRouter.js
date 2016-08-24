@@ -55,7 +55,7 @@ webProjectbModule.config(['$routeProvider',
                 templateUrl: 'webui/views/dashboard.html',
                 controllerAs: 'app'
             })
-            .when('/app', {
+            .when('/maps', {
                 controller: 'MapsController',
                 templateUrl: 'webui/views/maps.html',
                 })
