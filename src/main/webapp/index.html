@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="res/css/app.css" />
     <link rel="stylesheet" href="res/js/bootstrap/dist/css/bootstrap.min.css" />
 
+	<!-- Script google maps con keycode per girare su server localhost-->
+	<script  src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks&libraries=places" type="text/javascript"></script>
+
     <!-- Elenco javascript file -->
     <script src="res/js/jquery/dist/jquery.js"></script>
     <script src="res/js/angular/angular.js"></script>
@@ -23,6 +26,7 @@
     <script src="webui/modules/App.js"></script>
     <script src="webui/modules/Admin.js"></script>
     <script src="webui/modules/Auth.js"></script>
+    <script src="webui/modules/Maps.js"></script>
     <script src="webui/controllers/AdminController.js"></script>
     <script src="webui/controllers/AppController.js"></script>
     <script src="webui/controllers/HomeController.js"></script>
@@ -32,8 +36,6 @@
     <script src="webui/services/AuthService.js"></script>
     <script src="webui/webProjectRouter.js"></script>
     
-    <!-- Script google maps con keycode per girare su server localhost-->
-<script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks&libraries=places" type="text/javascript"></script>
 </head>
 <body>
     <div ng-view></div>

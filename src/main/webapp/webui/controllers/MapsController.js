@@ -1,7 +1,9 @@
-angular.module('App')
+var Maps = angular.module('Maps')
     .controller('MapsController', ['$rootScope', '$location', MapsController]);
 
-function MapsController($rootScope, $location) {
-   
-
+function MapsController($scope,$rootScope, $location) {
+	alert("mi prendo questo controller");
+	
+	
+	
 };

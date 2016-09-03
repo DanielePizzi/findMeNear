@@ -34,7 +34,7 @@ function HomeController($scope, $location) {
                    $scope.search = results[0].formatted_address;
                    $scope.gotoLocation(loc.lat(), loc.lng());
                } else {
-                   alert("Sorry, this search produced no results.");
+                   alert("Mi dispiace ma quello che hai cercato non ha prodotto risultati");
                }
            });
        }

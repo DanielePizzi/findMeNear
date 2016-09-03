@@ -1,42 +1,45 @@
-<div ng-include="'webui/views/common/header.html'"></div>
- <div class="container-fluid">
-		<h2>Google Maps Trovami</h2>
-	
-
-    <!-- cerca e vai alla posizione desiderata -->
-    <div class="text-right">
-        <div class="input-append text-right">
-            <input type="text" ng-model="search"/>
-            <button class="btn" type="button" ng-click="geoCode()" ng-disabled="search.length == 0" title="search" >
-              &nbsp;<i class="glyphicon glyphicon-search"></i>
-            </button>
-            <button class="btn" type="button" ng-click="gotoCurrentLocation()" title="current location">
-              &nbsp;<i class="glyphicon glyphicon-home"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- mappa -->
-    <app-map style="height:600px;margin:15px;box-shadow:0 3px 25px black;"
-        center="loc"
-        markers="pointOfInterest"
-    > 
-    </app-map>
-
-    <!-- posizione corrente -->
-    <div class="text-info text-right">
-        {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
-    </div>
+  <div ng-include="'webui/views/common/header.html'"></div>
+  <div class="container-fluid">
+    <h2>Google Maps Trovami</h2>
     
-    <h2>Punti di Interesse personali</h2>
-    <!-- Lista dei punti di interesse -->
+    <!-- cerca e vai alla posizione desiderata -->
     <div class="container-fluid">
-        <div class="span3 btn" 
-            ng-repeat="a in pointOfInterest"
-            ng-click="gotoLocation(a.lat, a.lon)">
-            <b>{{a.code}}</b>: {{a.name}}
-        </div>
-    </div>		
-    </div>
-    <div ng-include="'webui/views/common/footer.html'"></div>
-</div>
+     <div class="col-xs-12">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Inserisci la licalità che vuoi cercare" ng-model="search"/>
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button" ng-click="geoCode()" ng-disabled="search.length == 0" title="search" >
+           &nbsp;<i class="glyphicon glyphicon-search"></i>
+         </button>
+         <button class="btn btn-primary" type="button" ng-click="gotoCurrentLocation()" title="current location">
+           &nbsp;<i class="glyphicon glyphicon-home"></i>
+         </button>
+       </span>
+     </div><!-- input group -->
+   </div><!-- col-lg-6 -->
+  </div><!-- container-fluid -->
+
+
+  <!-- mappa -->
+  <app-map style="height:600px;margin:15px;box-shadow:0 3px 25px black;"
+  center="loc"
+  markers="pointOfInterest"
+  > 
+  </app-map>
+
+  <!-- posizione corrente -->
+  <div class="text-info text-right">
+    {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
+  </div>
+
+  <h2>Punti di Interesse personali</h2>
+  <!-- Lista dei punti di interesse -->
+  <div class="container-fluid">
+    <div class="btn btn-primary active" 
+    ng-repeat="a in pointOfInterest"
+    ng-click="gotoLocation(a.lat, a.lon)">
+    <b>{{a.code}}</b>: {{a.name}}
+  </div>
+  </div>		
+  </div>
+  <div ng-include="'webui/views/common/footer.html'"></div>

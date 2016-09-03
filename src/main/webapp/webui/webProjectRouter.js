@@ -8,7 +8,8 @@ var webProjectbModule = angular.module('webProjectRouter',
                                         'App.Common',
                                         'App.Admin',
                                         'App.Auth',
-                                        'App'
+                                        'App',
+                                        'Maps'
                                     ]);
 
 webProjectbModule.config(['$routeProvider',
@@ -58,6 +59,7 @@ webProjectbModule.config(['$routeProvider',
             .when('/maps', {
                 controller: 'MapsController',
                 templateUrl: 'webui/views/maps.html',
+                controllerAs: 'Maps'
                 })
 
             .otherwise({ redirectTo: '/home' });
