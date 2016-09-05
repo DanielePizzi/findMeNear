@@ -4,6 +4,7 @@ var Maps = angular.module('Maps')
 function MapsController($scope,$rootScope, $location) {
 	alert("mi prendo questo controller");
 	
-	
+	var stringMap = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+	console.log(stringMap);
 	
 };
