@@ -5,18 +5,18 @@
 il progetto è strutturato in modo tale da essere il più flessibile possibile. la suddivisione è la seguente:
 Nella cartella web-app sono presenti le cartelle suddivise per pagina visualizzata nell'interfaccia, ogni cartella possiede al suo interno:
 
-  * html
+  * HTML
      * viene scritto l'html della pagina
-  * module
+  * MODULE
     * dichiara il nomer del modulo e inietta le dipendene necessarie
   
-  * controller
+  * CONTROLLER
    *  definise le funzioni utilizzate nelle view e processa i dati ricevuto dal server(viene utilizzata la funzione $scope nativa di angular per effettuare il binding tra la view ed il controller)
   
-  * services
+  * SERVICE
     * si occupa della comunicazione tra la web application ed il backend
     
-  * template comune
+  * TEMPLATE COMUNE
    * nel template comune vengono definiti gli html comuni a tutta la applicazione
    * è presente anche il file templateComune.css dove viene definito tutto il foglio di stile applicato all'intera applicazione
       
