@@ -1,4 +1,4 @@
-angular.module('findMeNearApp.Login')
+angular.module('findMeNearApp.LoginModule')
     .controller('LoginController', ['$scope', '$rootScope', '$location', 'AuthService', function ($scope, $rootScope, $location, AuthService) {
     	   //var lc = this;
 

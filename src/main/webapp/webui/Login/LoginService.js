@@ -1,6 +1,6 @@
 
 'use strict';
-angular.module('findMeNearApp.Login')
+angular.module('findMeNearApp.LoginModule')
     .service('AuthService', ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout', 'BackendCfg',
         function (Base64, $http, $cookieStore, $rootScope, $timeout, BackendCfg) {
             var service = this;

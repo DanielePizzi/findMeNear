@@ -1,9 +1,9 @@
-  <header ng-include="'webui/templateComune/header.html'"></header>
-  <div class="container-fluid">
+<!-- Inizio codice home -->
+<header ng-include="'webui/templateComune/header.html'"></header>
+<div class="container-fluid">
+<form name="homeForm" class="home"> 
     <h2>Google Maps Trovami</h2>
-    
-    <!-- cerca e vai alla posizione desiderata -->
-    <div class="container-fluid">
+    <div class="container-fluid"></div>
      <div class="col-xs-12">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Inserisci la licalità che vuoi cercare" ng-model="search"/>
@@ -16,15 +16,11 @@
          </button>
        </span>
      </div><!-- input group -->
-   </div><!-- col-lg-6 -->
+  </div><!-- col-xs-12 -->
   </div><!-- container-fluid -->
-
-
-  <!-- mappa -->
   <app-map style="height:600px;margin:15px;box-shadow:0 3px 25px black;"
   center="loc"
-  markers="pointOfInterest"
-  > 
+  markers="pointOfInterest"> 
   </app-map>
 
   <!-- posizione corrente -->
@@ -40,6 +36,8 @@
     ng-click="gotoLocation(a.lat, a.lon)">
     <b>{{a.code}}</b>: {{a.name}}
   </div>
-  </div>		
-  </div>
+  </div>	
+</form>	
+</div><!-- container fluid -->
   <div ng-include="'webui/templateComune/footer.html'"></div>
+<!-- Fine codice Home -->

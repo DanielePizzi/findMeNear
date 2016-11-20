@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <title>findMeNear</title>
      
-    <!-- Elenco fogli di stile fogli di stile -->
+    
+ <!-- ********************************************
+      * ELENCO DEI FILE CSS PER I FOGLI DI STILE *
+      ******************************************** -->
     <link rel="stylesheet" href="webui/templateComune/assets/css/templateComune.css" />
     <link rel="stylesheet" href="res/js/bootstrap/dist/css/bootstrap.min.css" />
 
-	<!-- Script google maps con keycode per girare su server localhost-->
+ <!-- ************************************************************************
+      * INTEGRAZIONE GOOGLE MAPC CON KEYCODE PER GIRARE SU SERVER LOCALHOST  *
+      ************************************************************************ -->
+
 	<script  src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks&libraries=places" type="text/javascript"></script>
 
-    <!-- Elenco javascript file -->
+ <!-- ****************************************************************************
+      * ELENCO INTEGRAZIONE DEI FILE JAVASCRITP PER L'APPLICAZIONE INIZIO CODICE *
+      **************************************************************************** -->
+ 
     <script src="res/js/jquery/dist/jquery.js"></script>
     <script src="res/js/angular/angular.js"></script>
     <script src="res/js/angular-animate/angular-animate.js"></script>
@@ -21,20 +30,33 @@
     <script src="res/js/angular-cookies/angular-cookies.js"></script>
     <script src="res/js/cryptojs/rollups/aes.js"></script>
     <script src="res/js/cryptojs/rollups/pbkdf2.js"></script>
-    
-    <script src="webui/Login/LoginModule.js"></script>
-    <script src="webui/Register/RegisterModule.js"></script>
-    <script src="webui/Maps/MapsModule.js"></script>
-    <script src="webui/Home/HomeModule.js"></script>
-    
-    <script src="webui/Login/LoginController.js"></script>
-    <script src="webui/Home/HomeController.js"></script>
-    <script src="webui/Register/RegisterController.js"></script>
-    <script src="webui/Maps/MapsController.js"></script>
-    
-    <script src="webui/Login/LoginService.js"></script>
-    <script src="webui/Register/RegisterService.js"></script>
-    
+ 
+  <!-- *************************************************************************************
+      * ELENCO INTEGRAZIONE DEI FILE JAVASCRITP PROPIETARI DELL'APPLICAZIONE INIZIO CODICE *
+      ************************************************************************************** -->
+ <!-- INIZIO CODICE TEMPLACE COMUNE -->
+ 	<script src="webui/templateComune/templateComuneModule.js"></script>
+ 	<script src="webui/templateComune/templateComuneController.js"></script>
+ 	<script src="webui/templateComune/templateComuneDirective.js"></script>
+ 	<script src="webui/templateComune/templateComuneFilter.js"></script>
+ 
+ <!-- INIZIO CODICE LOGIN -->
+ 	<script src="webui/Login/LoginModule.js"></script>
+ 	<script src="webui/Login/LoginController.js"></script>
+ 	<script src="webui/Login/LoginService.js"></script>
+ <!-- INIZIO CODICE MAPS -->
+   	<script src="webui/Maps/MapsModule.js"></script>
+   	<script src="webui/Maps/MapsController.js"></script> 	
+<!-- INIZIO CODICE HOME -->
+     <script src="webui/Home/HomeModule.js"></script>
+     <script src="webui/Home/HomeController.js"></script>
+ 
+ <!-- INIZIO CODICE REGISTER -->
+ 	<script src="webui/Register/RegisterModule.js"></script>
+ 	<script src="webui/Register/RegisterController.js"></script>
+ 	<script src="webui/Register/RegisterService.js"></script>
+ 
+ <!-- INIZIO CODICE TEMPLATE COMUNE -->
     <script src="webui/app.js"></script>
     
 </head>

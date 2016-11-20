@@ -1,1 +1,1 @@
-angular.module('findMeNearApp.Maps', [])
+angular.module('findMeNearApp.MapsModule', [])

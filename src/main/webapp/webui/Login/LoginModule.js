@@ -1,1 +1,1 @@
-angular.module('findMeNearApp.Login', [])
+angular.module('findMeNearApp.LoginModule', [])

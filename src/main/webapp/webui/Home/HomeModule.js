@@ -1,1 +1,1 @@
-angular.module('findMeNearApp.Home', []);
+angular.module('findMeNearApp.HomeModule', []);

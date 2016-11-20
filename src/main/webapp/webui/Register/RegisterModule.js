@@ -1,1 +1,1 @@
-angular.module('findMeNearApp.Register', [])
+angular.module('findMeNearApp.RegisterModule', [])

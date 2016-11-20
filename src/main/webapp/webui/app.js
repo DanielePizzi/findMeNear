@@ -5,10 +5,11 @@ angular.module('findMeNearApp',
                                         'ngMessages',
                                         'ngRoute',
                                         'ngCookies',
-                                        'findMeNearApp.Home',
-                                        'findMeNearApp.Login',
-                                        'findMeNearApp.Register',
-                                        'findMeNearApp.Maps'
+                                        'findMeNearApp.templateComuneModule',
+                                        'findMeNearApp.HomeModule',
+                                        'findMeNearApp.LoginModule',
+                                        'findMeNearApp.RegisterModule',
+                                        'findMeNearApp.MapsModule'
                                     ])
 .config(['$routeProvider',
     function ($routeProvider){

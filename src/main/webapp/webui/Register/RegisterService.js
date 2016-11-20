@@ -1,6 +1,6 @@
 
 'use strict';
-angular.module('findMeNearApp.Register')
+angular.module('findMeNearApp.RegisterModule')
     .service('RegisterService', ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout', 'BackendCfg',
         function (Base64, $http, $cookieStore, $rootScope, $timeout, BackendCfg) {
             var service = this;

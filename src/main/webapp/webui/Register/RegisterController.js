@@ -1,4 +1,4 @@
-angular.module('findMeNearApp.Register')
+angular.module('findMeNearApp.RegisterModule')
     .controller('RegisterController', ['$location', '$scope', '$rootScope', 'RegisterService', function ($location, $scope, $rootScope, RegisterService) {
 //      var rc = this;
         console.log('register controller');
