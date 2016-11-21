@@ -1,38 +1,35 @@
 <header ng-include="'webui/templateComune/header.html'"></header>
 <div class="container">
-    <div class="col-md-6 col-md-offset-3"  ng-controller="RegisterController as rc">
+<form name="registerForm" class="register">
+    <div class="col-md-6 col-md-offset-3">
         <h2>Form Registrazione</h2>
-        <div ng-show="rc.error" class="alert alert-danger">{{rc.error}}</div>
-        <form name="form" ng-submit="register(false)" role="form">
-            <fieldset ng-disabled="isSubmitted">
-            <div class="form-group" ng-class="{ 'has-error': form.displayName.$dirty && form.displayName.$error.required }">
-                <label for="displayName">Nome</label>
-                <input type="text" name="displayName" id="displayName" class="form-control" ng-model="rc.user.displayName" required />
-                <span ng-show="form.displayName.$dirty && form.firstName.$error.required" class="help-block">Inserire un nome</span>
+            <div class="form-group" ng-class="{ 'has-error': registerForm.name.$dirty && registerForm.name.$error.required , 'valid': registerForm.name.$valid}">
+                <label for="displayName">Nome <span>*</span></label>
+                <input type="text" name="name" id="name" class="form-control" ng-model="register.name" required  />
+                <span ng-show="registerForm.name.$error.required" class="help-block">Inserire un nome</span>
             </div>
-            <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }">
-                <label for="email">E-mail</label>
-                <input type="email" name="email" id="email" class="form-control" ng-model="rc.user.email" required />
-                <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Inserire una E-mail</span>
-                <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">Inserire una E-mail valida</span>
+            <div class="form-group" ng-class="{ 'has-error': registerForm.email.$dirty && (registerForm.email.$error.required || registerForm.email.$error.email) , 'valid': registerForm.email.$valid }">
+                <label for="email">E-mail <span>*</span></label>
+                <input type="email" name="email" id="email" class="form-control" ng-model="register.email" required />
+                <span ng-show="registerForm.email.$pristine && registerForm.email.$error.required" class="help-block">Inserire una E-mail</span>
+                <span ng-show="!registerForm.email.$pristine && registerForm.email.$dirty && registerForm.email.$error.email" class="help-block">Inserire una E-mail valida</span>
             </div>
-            <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="form-control" ng-model="rc.user.password" required />
-                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Inserire una password</span>
+            <div class="form-group" ng-class="{ 'has-error': registerForm.password.$dirty && registerForm.password.$error.required ,'valid': registerForm.password.$valid}">
+                <label for="password">Password <span>*</span></label>
+                <input type="password" name="password" id="password" class="form-control" ng-model="register.password" required />
+                <span ng-show="registerForm.password.$error.required" class="help-block">Inserire una password</span>
             </div>
-            <div class="form-group" ng-class="{ 'has-error': form.vpassword.$dirty && form.vpassword.$invalid }">
-                <label for="password">Verifica Password</label>
-                <input type="password" name="vpassword" id="vpassword" class="form-control" ng-model="rc.user.vpassword" required compare-to="rc.user.password" />
-                <span ng-show="form.vpassword.$dirty && form.vpassword.$invalid" class="help-block">Password diversa</span>
+            <div class="form-group" ng-class="{ 'has-error': registerForm.password2.$dirty && registerForm.password2.$invalid ,'valid': registerForm.password2.$valid}">
+                <label for="password">Verifica Password <span>*</span></label>
+                <input type="password" name="password2" id="password2" class="form-control" ng-model="register.password2" required compare-to="register.password" />
+                <span ng-show="registerForm.password2.$pristine && registerForm.password2.$error.required" class="help-block">Inserire una password</span>
+                <span ng-show="registerForm.password2.$dirty && registerForm.password2.$invalid" class="help-block">Password diversa</span>
             </div>
             <div class="form-actions">
-                <button type="submit" ng-disabled="form.$invalid || rc.dataLoading" class="btn btn-primary">Registrati</button>
-                <img ng-if="rc.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                <button type="submit" ng-disabled="registerForm.$invalid" ng-click="registrati()" class="btn btn-primary">Registrati</button>
                 <a href="#/login" class="btn btn-link">Cancella</a>
             </div>
-            </fieldset>
+          </div>
         </form>
     </div>
-    <div ng-include="'webui/templateComune/footer.html'"></div>
-</div>
+<div ng-include="'webui/templateComune/footer.html'"></div>

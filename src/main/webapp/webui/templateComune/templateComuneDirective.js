@@ -1,5 +1,6 @@
 angular.module('findMeNearApp.templateComuneModule')
 
+/*DIRETTIVA PER FAR DISEGNARE LA MAPPA A SCHERMO*/
 .directive("appMap", function () {
 	//- Documentazione per utilizzare google maps: https://developers.google.com/maps/documentation/
 
@@ -123,4 +124,26 @@ angular.module('findMeNearApp.templateComuneModule')
            }
        }
    };
+})
+
+/*DIRETTIVA PER COMPARARE SE DUE CAMPI SONO UGUALI*/  
+
+.directive("compareTo", function () {
+	return {
+		        require: "ngModel",
+		        scope: {
+		            otherModelValue: "=compareTo"
+		        },
+		        link: function(scope, element, attributes, ngModel) {
+		             
+		            ngModel.$validators.compareTo = function(modelValue) {
+		                return modelValue == scope.otherModelValue;
+		            };
+		 
+		            scope.$watch("otherModelValue", function() {
+		                ngModel.$validate();
+		            });
+		        }
+		    };
 });
+

@@ -17,31 +17,26 @@ angular.module('findMeNearApp',
             .when('/home', {
                 controller: 'HomeController',
                 templateUrl: 'webui/Home/home.html',
-                controllerAs: 'home'
             })
 
             .when('/login', {
                 controller: 'LoginController',
                 templateUrl: 'webui/Login/login.html',
-                controllerAs: 'lc'
             })
 
             .when('/register', {
                 controller: 'RegisterController',
                 templateUrl: 'webui/Register/register.html',
-                controllerAs: 'rc'
             })
 
             .when('/access-denied', {
                 controller: 'LoginController',
                 templateUrl: 'webui/Login/access-denied.html',
-                controllerAs: 'lc'
             })
 
             .when('/maps', {
                 controller: 'MapsController',
                 templateUrl: 'webui/Maps/maps.html',
-                controllerAs: 'Maps'
                 })
 
             .otherwise({ redirectTo: '/home' });
