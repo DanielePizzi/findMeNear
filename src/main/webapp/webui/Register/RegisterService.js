@@ -6,7 +6,7 @@ angular.module('findMeNearApp.RegisterModule')
     	return {
     		
     		datiRegistrazione: function(nuovoUtente){
-    			return $http.post('/findMeNear' ,nuovoUtente);
+    			return $http.post('findMeNear/register' ,nuovoUtente);
     		}
     		
     	}

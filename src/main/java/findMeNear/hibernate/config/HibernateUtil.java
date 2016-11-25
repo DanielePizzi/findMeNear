@@ -9,11 +9,10 @@ import org.hibernate.service.ServiceRegistry;
 public class HibernateUtil {
 	 private static SessionFactory sessionFactory;
 	 private static ServiceRegistry serviceRegistry;
-
 	 
 	 public static SessionFactory createSessionFactory() {
 		    Configuration configuration = new Configuration();
-		    configuration.configure();
+		    configuration.configure("/main/resources/config/database/hibernate.cfg.xml");
 		    serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
 		            configuration.getProperties()).build();
 		    sessionFactory = configuration.buildSessionFactory(serviceRegistry);

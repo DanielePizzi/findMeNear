@@ -14,7 +14,7 @@ angular.module('findMeNearApp.RegisterModule')
     		
     		console.log(nuovoUtente);
     		RegisterService.datiRegistrazione(nuovoUtente).then(function(response){
-    			console.log(response);
+    			console.log(response.data);
     		})
     	}
      
