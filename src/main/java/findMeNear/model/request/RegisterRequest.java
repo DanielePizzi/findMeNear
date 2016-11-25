@@ -1,11 +1,11 @@
-package findMeNear.model;
+package findMeNear.model.request;
 
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 
-public class Registrazione {
+public class RegisterRequest {
 	@NotBlank
 	@NotNull
 	private String name;

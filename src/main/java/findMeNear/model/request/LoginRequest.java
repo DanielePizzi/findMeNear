@@ -1,6 +1,6 @@
-package findMeNear.model;
+package findMeNear.model.request;
 
-public class Login {
+public class LoginRequest {
 	private String email;
 	private String password;
 	

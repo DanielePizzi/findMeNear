@@ -2,6 +2,7 @@ package findMeNear.controllers;
 
 
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.validation.Errors;
@@ -11,24 +12,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import findMeNear.model.Login;
-import findMeNear.model.Registrazione;
-import findMeNear.persistent.entity.User;
+import findMeNear.model.request.RegisterRequest;
+import findMeNear.model.response.RegisterResponse;
 import findMeNear.services.IServices;
 import findMeNear.services.impl.ServicesImpl;
-import findMeNear.utils.CryptPassword;
+import findMeNear.utils.SessionToken;
 
 @RestController
-public class Controller {
+public class RegisterController {
 	
 	private IServices services = new ServicesImpl();
 
-	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean register(@Valid @RequestBody Registrazione registrazione, Errors errors){
+	public RegisterResponse register(@Valid @RequestBody RegisterRequest registrazione, Errors errors){
+		RegisterResponse response = new RegisterResponse();
 		if(errors.hasErrors()){
-			return false;
+			response.setEsito(false);
+			return response;
 		}
 		
 		String name = registrazione.getName();
@@ -36,22 +37,11 @@ public class Controller {
 		String password = registrazione.getPassword();
 		if(!services.isEmailexist(email)){
 			services.registrazione(name, email, password);
-			return true;
-		}		
-		return false;
-	}
-	
-	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	@ResponseBody
-	public User login(@RequestBody Login login){
-		String email = login.getEmail();
-		String password = login.getPassword();
-		
-		User result = services.login(email);
-		if(CryptPassword.cryptWithMD5(password).equals(result.getPassword())){
-			return result;
+			response.setEsito(true);
+			response.setToken_sessione(SessionToken.getSessionToken());
+			return response;
 		}
-		return null; 
+		response.setEsito(false);
+		return response;
 	}
 }
