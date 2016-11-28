@@ -8,9 +8,9 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a ng-if="!currentUser" href="#/login">Login</a></li>
-                <li><a ng-if="currentUser" href="#/app">Benvenuto {{currentUser.displayName}}!</a></li>
-                <li><a ng-if="currentUser" ng-controller="AppController as app" ng-click="app.logout()" style="cursor: pointer;">Esci</a></li>
+                <li><a ng-if="!utenteLoggato" href="#/login">Login</a></li>
+                <li><a ng-if="utenteLoggato" >Benvenuto {{utenteLoggato.token_sessione}}!</a></li>
+                <li><a ng-if="utenteLoggato" ng-click="logout()" style="cursor: pointer;">Esci</a></li>
             </ul>
         </div>
     </div>

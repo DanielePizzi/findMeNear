@@ -2,6 +2,7 @@
 <header ng-include="'webui/templateComune/header.html'"></header>
 <div class="container-fluid">
 <form name="homeForm" class="home"> 
+	<h1 ng-show="utenteLoggato != null">Benvenuto {{utenteLoggato.token_sessione}}</h1>
     <h2>Google Maps Trovami</h2>
     <div class="container-fluid"></div>
      <div class="col-xs-12">

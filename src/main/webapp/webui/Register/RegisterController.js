@@ -2,7 +2,6 @@ angular.module('findMeNearApp.RegisterModule')
     .controller('RegisterController', ['$location', '$scope', 'RegisterService', function ($location, $scope, RegisterService) {
 
     	$scope.register = {};
-    	console.log(RegisterService);
     	
     	$scope.registrati = function(){
     		
@@ -14,7 +13,8 @@ angular.module('findMeNearApp.RegisterModule')
     		
     		console.log(nuovoUtente);
     		RegisterService.datiRegistrazione(nuovoUtente).then(function(response){
-    			console.log(response.data);
+    			sessionStorage.setItem('utenteLoggato',JSON.stringify(response.data));
+    			$location.path('/home');
     		})
     	}
      

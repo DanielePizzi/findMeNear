@@ -3,6 +3,10 @@ angular.module('findMeNearApp.HomeModule')
 	
 	$scope.home = {};
 	
+	$scope.utenteLoggato = JSON.parse(JSON.stringify(eval('(' + sessionStorage.getItem('utenteLoggato')+')')));
+	
+	console.log($scope.utenteLoggato);
+	
 	// Posizione corrente al momento dell'apertura della macchina
 	   $scope.loc = { lat: 41.9, lon: 12.416667 };
 	   $scope.gotoCurrentLocation = function () {
