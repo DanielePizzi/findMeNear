@@ -1,27 +1,16 @@
 angular.module('findMeNearApp.LoginModule')
-    .controller('LoginController', ['$scope', '$rootScope', '$location', 'AuthService', function ($scope, $rootScope, $location, AuthService) {
-    	   //var lc = this;
-
-        (function initController() {
-            // Reset della login
-            AuthService.clearCredentials();
-        })();
+    .controller('LoginController', ['$scope', '$rootScope', '$location','LoginService', function ($scope, $rootScope, $location,LoginService) {
+    	  
+    	$scope.login = {};
 
         $scope.login = function () {
-            console.log('received the login event for user: '+$scope.user.email);
-            $scope.dataLoading = true;
-            $rootScope.isSubmitted = true;
-            AuthService.login($scope.user.email, $scope.user.password, function (response) {
-                if (response.code==200) {
-                    AuthService.createJWTToken(response.result.user, response.result.token);
-                    AuthService.setCredentials();
-                    $location.path('/app');
-                } else {
-                    $scope.error = response.result;
-                    $scope.details = response.details;
-                    $scope.dataLoading = false;
-                    $rootScope.isSubmitted = false;
-                }
-            });
+        	var utente = {
+    	    		email: $scope.login.email,
+    	    		password: $scope.login.password,
+    	    	}
+          console.log(utente);
+        	LoginService.login(utente).then(function(response){
+    			console.log(response.data);
+    		})
         };
     }]);

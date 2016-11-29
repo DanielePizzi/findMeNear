@@ -50,6 +50,7 @@ angular.module('findMeNearApp.HomeModule')
 	       { "name": "Colosseo", "code": "RM", "city": "Roma", "state": "IT", "lat": 41.8902142, "lon": 12.4900369, "vol2011": 44414121 },
 	       { "name": "Tor Vergata", "code": "RM", "city": "Roma", "state": "IT", "lat": 41.850146, "lon": 12.5956788, "vol2011": 44414121 },
 	   ];
+	   
 	}])
 
    

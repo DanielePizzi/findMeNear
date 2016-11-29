@@ -1,8 +1,4 @@
 package findMeNear.controllers;
-
-
-
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.validation.Errors;

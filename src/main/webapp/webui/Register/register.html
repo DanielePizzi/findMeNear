@@ -16,13 +16,13 @@
             </div>
             <div class="form-group" ng-class="{ 'has-error': registerForm.password.$dirty && registerForm.password.$error.required ,'valid': registerForm.password.$valid}">
                 <label for="password">Password <span>*</span></label>
-                <input type="password" name="password" id="password" class="form-control" ng-model="register.password" required />
-                <span ng-show="registerForm.password.$error.required" class="help-block">Inserire una password</span>
+                <input type="password" name="password" id="password" class="form-control" minlength="8" ng-model="register.password" required />
+                <span ng-show="registerForm.password.$error.required" class="help-block">Inserire una password(almeno 8 cifre)</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': registerForm.password2.$dirty && registerForm.password2.$invalid ,'valid': registerForm.password2.$valid}">
                 <label for="password">Verifica Password <span>*</span></label>
-                <input type="password" name="password2" id="password2" class="form-control" ng-model="register.password2" required compare-to="register.password" />
-                <span ng-show="registerForm.password2.$pristine && registerForm.password2.$error.required" class="help-block">Inserire una password</span>
+                <input type="password" name="password2" id="password2" class="form-control" minlength="8" ng-model="register.password2" required compare-to="register.password" />
+                <span ng-show="registerForm.password2.$pristine && registerForm.password2.$error.required" class="help-block">Inserire una password(almeno 8 cifre)</span>
                 <span ng-show="registerForm.password2.$dirty && registerForm.password2.$invalid" class="help-block">Password diversa</span>
             </div>
             <div class="form-actions">
