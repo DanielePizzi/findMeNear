@@ -3,7 +3,14 @@ package findMeNear.model.response;
 public class LoginResponse {
 	private boolean esito;
 	private String token_sessione;
+	private String nome;
 	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 	public boolean isEsito() {
 		return esito;
 	}

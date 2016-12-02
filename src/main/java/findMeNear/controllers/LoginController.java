@@ -35,9 +35,14 @@ private IServices services = new ServicesImpl();
 		String password = login.getPassword();
 		
 		User result = services.login(email);
+		if(result == null){
+			response.setEsito(false);
+			return response;
+		}
 		if(CryptPassword.cryptWithMD5(password).equals(result.getPassword())){
 			response.setEsito(true);
 			response.setToken_sessione(SessionToken.getSessionToken());
+			response.setNome(result.getNome());
 			return response;
 		}
 		response.setEsito(false);

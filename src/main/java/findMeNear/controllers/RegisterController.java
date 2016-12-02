@@ -31,10 +31,11 @@ public class RegisterController {
 		String name = registrazione.getName();
 		String email = registrazione.getEmail();
 		String password = registrazione.getPassword();
-		if(!services.isEmailexist(email)){
+		if(!services.isUserExist(email,name)){
 			services.registrazione(name, email, password);
 			response.setEsito(true);
 			response.setToken_sessione(SessionToken.getSessionToken());
+			response.setNome(name);
 			return response;
 		}
 		response.setEsito(false);
