@@ -13,8 +13,12 @@ angular.module('findMeNearApp.RegisterModule')
     		
     		console.log(nuovoUtente);
     		RegisterService.datiRegistrazione(nuovoUtente).then(function(response){
-    			sessionStorage.setItem('utenteLoggato',JSON.stringify(response.data));
-    			$location.path('/home');
+    			if (response.data.esito == true) {
+    				sessionStorage.setItem('utenteLoggato',JSON.stringify(response.data));
+        			$location.path('/home');
+				}else {
+					alert("qualcosa è andato storto");
+				}
     		})
     	}
      

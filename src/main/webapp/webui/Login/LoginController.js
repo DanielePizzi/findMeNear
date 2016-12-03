@@ -8,9 +8,13 @@ angular.module('findMeNearApp.LoginModule')
     	    		email: $scope.login.email,
     	    		password: $scope.login.password,
     	    	}
-          console.log(utente);
         	LoginService.login(utente).then(function(response){
-    			console.log(response.data);
-    		})
+        		if (response.data.esito == true) {
+        			sessionStorage.setItem('utenteLoggato',JSON.stringify(response.data));
+        			$location.path('/home');
+				}else {
+					alert("qualcosa è andato storto");
+				}
+        	})
         };
     }]);
