@@ -62,6 +62,7 @@ private IServices services = new ServicesImpl();
 			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 			logger.debug(String.format("%s - %s::           END",CLASS,method));
 			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+			
 			return response;
 		}
 		if(CryptPassword.cryptWithMD5(password).equals(result.getPassword())){
