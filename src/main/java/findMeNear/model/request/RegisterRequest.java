@@ -35,4 +35,10 @@ public class RegisterRequest {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@Override
+	public String toString() {
+		return "RegisterRequest [name=" + name + ", password=" + password
+				+ ", email=" + email + "]";
+	}
+	
 }

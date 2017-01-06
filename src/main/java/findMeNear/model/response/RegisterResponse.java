@@ -23,4 +23,11 @@ public class RegisterResponse {
 	public void setToken_sessione(String token_sessione) {
 		this.token_sessione = token_sessione;
 	}
+	@Override
+	public String toString() {
+		return "RegisterResponse [esito=" + esito + ", token_sessione="
+				+ token_sessione + ", nome=" + nome + "]";
+	}
+	
+	
 }

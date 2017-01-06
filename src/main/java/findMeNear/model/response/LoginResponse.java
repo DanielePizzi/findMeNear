@@ -23,4 +23,10 @@ public class LoginResponse {
 	public void setToken_sessione(String token_sessione) {
 		this.token_sessione = token_sessione;
 	}
+	@Override
+	public String toString() {
+		return "LoginResponse [esito=" + esito + ", token_sessione="
+				+ token_sessione + ", nome=" + nome + "]";
+	}
+	
 }
