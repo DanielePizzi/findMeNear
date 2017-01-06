@@ -42,6 +42,7 @@ private IServices services = new ServicesImpl();
 		LoginResponse response = new LoginResponse();
 		if(errors.hasErrors()){
 			response.setEsito(false);
+			response.setDescrizione("INPUT NON VALIDI");
 			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,errors.getAllErrors()));
 			logger.debug(String.format("%s - %s::response[%s]",CLASS,method,response.toString()));
 			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
@@ -57,6 +58,7 @@ private IServices services = new ServicesImpl();
 		User result = services.login(email);
 		if(result == null){
 			response.setEsito(false);
+			response.setDescrizione("UTENTE NON ESISTENTE");
 			logger.debug(String.format("%s - %s::user null",CLASS,method));
 			logger.debug(String.format("%s - %s::response[%s]",CLASS,method,response.toString()));
 			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
@@ -77,6 +79,7 @@ private IServices services = new ServicesImpl();
 			return response;
 		}
 		response.setEsito(false);
+		response.setDescrizione("PASSWORD NON CORRETTA");
 		logger.debug(String.format("%s - %s::response[%s]",CLASS,method,response.toString()));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		logger.debug(String.format("%s - %s::           END",CLASS,method));

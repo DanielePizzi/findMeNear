@@ -1,7 +1,6 @@
 package findMeNear.model.response;
 
-public class RegisterResponse {
-	private boolean esito;
+public class RegisterResponse extends StatusResponse {
 	private String token_sessione;
 	private String nome;
 	
@@ -10,12 +9,6 @@ public class RegisterResponse {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	public boolean isEsito() {
-		return esito;
-	}
-	public void setEsito(boolean esito) {
-		this.esito = esito;
 	}
 	public String getToken_sessione() {
 		return token_sessione;

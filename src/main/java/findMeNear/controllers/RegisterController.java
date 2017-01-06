@@ -38,6 +38,7 @@ public class RegisterController {
 		
 		if(errors.hasErrors()){
 			response.setEsito(false);
+			response.setDescrizione("INPUT NON VALIDI");
 			logger.debug(String.format("%s - %s:: errore nei parametri di input - response[%s]",CLASS,method,response.toString()));
 			return response;
 		}
@@ -57,6 +58,7 @@ public class RegisterController {
 			return response;
 		}
 		response.setEsito(false);
+		response.setDescrizione("UTENTE ESISTENTE");
 		logger.debug(String.format("%s - %s:: l'utente esiste - response[%s]",CLASS,method,response.toString()));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		logger.debug(String.format("%s - %s::           END",CLASS,method));
