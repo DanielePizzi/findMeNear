@@ -1,7 +1,7 @@
 angular.module('findMeNearApp.templateComuneModule')
 
 /*DIRETTIVA PER FAR DISEGNARE LA MAPPA A SCHERMO*/
-.directive("appMap", function () {
+.directive("appMap", [ '$location', function (location) {
 	//- Documentazione per utilizzare google maps: https://developers.google.com/maps/documentation/
 
 	return {
@@ -23,6 +23,8 @@ angular.module('findMeNearApp.templateComuneModule')
            var toResize, toCenter;
            var map;
            var currentMarkers;
+           
+           console.log(location.url())
 
            // cambia lo scoope dell'aplicazione per cambiare la mappa
            var arr = ["width", "height", "markers", "mapTypeId", "panControl", "zoomControl", "scaleControl"];
@@ -90,7 +92,32 @@ angular.module('findMeNearApp.templateComuneModule')
                        }
                    }, 500);
                });
+               
+               if (location.url() == "/maps") {
+            	   google.maps.event.addListener(map, 'click', function(event) {
+                       addMarker(event.latLng, map);
+                     });
+			}
+               
            }
+           
+           /*aggiunta marker dinamicamente*/
+           function addMarker(location, map) {
+        	   var markers = [];
+        	   var labels = 'A';
+        	   var labelIndex = 0;
+          		  // Add the marker at the clicked location, and add the next-available label
+          		  // from the array of alphabetical characters.
+          		  var marker = new google.maps.Marker({
+          			draggable: true,
+          		    position: location,
+          		    label: labels[labelIndex++ % labels.length],
+          		    animation: google.maps.Animation.DROP,
+          		    map: map
+          		  });
+          		  markers.push(marker);
+          		  console.log(markers);
+          	}
 
            // aggiornamento dei markers
            function updateMarkers() {
@@ -98,9 +125,7 @@ angular.module('findMeNearApp.templateComuneModule')
 
                    // cancella i vecchi markers
                    if (currentMarkers != null) {
-                       for (var i = 0; i < currentMarkers.length; i++) {
-                           currentMarkers[i] = m.setMap(null);
-                       }
+                	   currentMarkers = null;
                    }
 
                    // creazione di un nuovo markers
@@ -109,7 +134,7 @@ angular.module('findMeNearApp.templateComuneModule')
                    if (angular.isString(markers)) markers = scope.$eval(scope.markers);
                    for (var i = 0; i < markers.length; i++) {
                        var m = markers[i];
-                       var loc = new google.maps.LatLng(m.lat, m.lon);
+                       var loc = new google.maps.LatLng(m.geometry.location.lat, m.geometry.location.lng);
                        var mm = new google.maps.Marker({ position: loc, map: map, title: m.name });
                        currentMarkers.push(mm);
                    }
@@ -122,9 +147,10 @@ angular.module('findMeNearApp.templateComuneModule')
                if (angular.isString(loc)) loc = scope.$eval(loc);
                return new google.maps.LatLng(loc.lat, loc.lon);
            }
+           
        }
    };
-})
+}])
 
 /*DIRETTIVA PER COMPARARE SE DUE CAMPI SONO UGUALI*/  
 

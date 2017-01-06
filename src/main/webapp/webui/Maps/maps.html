@@ -1,11 +1,8 @@
 <header ng-include="'webui/templateComune/header.html'"></header>
 
 <!-- mappa -->
-    <app-map style="height:600px;margin:15px;box-shadow:0 3px 25px black;"
-        center="loc"
-        markers="pointOfInterest"
-    > 
+    <app-map id="map" style="height:600px;margin:15px;box-shadow:0 3px 25px black;" center="maps.loc" markers="maps.pointOfInterestPersonal"> 
     </app-map>
    
-<div ng-include="'webui/views/common/footer.html'"></div>
+<div ng-include="'webui/templateComune/footer.html'"></div>
 

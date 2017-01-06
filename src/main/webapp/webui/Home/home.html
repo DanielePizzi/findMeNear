@@ -7,7 +7,7 @@
     <div class="container-fluid"></div>
      <div class="col-xs-12">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Inserisci la licalità che vuoi cercare" ng-model="search"/>
+        <input type="text" class="form-control" placeholder="Inserisci la località che vuoi cercare" ng-model="search"/>
         <span class="input-group-btn">
           <button class="btn btn-primary" type="button" ng-click="geoCode()" ng-disabled="search.length == 0" title="search" >
            &nbsp;<i class="glyphicon glyphicon-search"></i>
@@ -18,10 +18,20 @@
        </span>
      </div><!-- input group -->
   </div><!-- col-xs-12 -->
+  <div class="row">
+	  <div class="col-xs-10">
+	  	<h2>Categorie</h2>
+	  	<label>Scegli una categoria per trovare i punti di interesse a te vicini</label>
+	  	<p><select name="categoria" ng-model="home.categoria" class="categoria">
+	  		<option ng-repeat="categoria in home.categorie" value="{{categoria}}">{{categoria}}</option>
+	  	</select></p>
+	  </div><!-- col-xs-10 -->
+	  <div class="col-xs-2">
+	  	<button class="btn btn-primary ricerca" type="button" ng-click="home.ricercaPerCategoria()" value="ricerca">Ricerca</button>
+	  </div>
+  </div><!-- row -->
   </div><!-- container-fluid -->
-  <app-map style="height:600px;margin:15px;box-shadow:0 3px 25px black;"
-  center="loc"
-  markers="pointOfInterest"> 
+  <app-map style="height:600px;margin:15px;box-shadow:0 3px 25px black;" center="loc" markers="pointOfInterest"> 
   </app-map>
 
   <!-- posizione corrente -->
@@ -29,13 +39,10 @@
     {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
   </div>
 
-  <h2>Punti di Interesse personali</h2>
   <!-- Lista dei punti di interesse -->
   <div class="container-fluid">
-    <div class="btn btn-primary active" 
-    ng-repeat="a in pointOfInterest"
-    ng-click="gotoLocation(a.lat, a.lon)">
-    <b>{{a.code}}</b>: {{a.name}}
+    <div class="btn btn-primary active bottone" ng-repeat="a in pointOfInterest" ng-click="gotoLocation(a.geometry.location.lat, a.geometry.location.lng)">
+    <b>{{a.vicinity}}</b>: {{a.name}}
   </div>
   </div>	
 </form>	

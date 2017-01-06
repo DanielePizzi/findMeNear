@@ -11,7 +11,6 @@ angular.module('findMeNearApp.RegisterModule')
     	    		password: $scope.register.password,
     	    	}
     		
-    		console.log(nuovoUtente);
     		RegisterService.datiRegistrazione(nuovoUtente).then(function(response){
     			if (response.data.esito == true) {
     				sessionStorage.setItem('utenteLoggato',JSON.stringify(response.data));

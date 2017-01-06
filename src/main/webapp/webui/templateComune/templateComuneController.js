@@ -7,7 +7,6 @@ angular.module('findMeNearApp.templateComuneModule')
 	}
 	
 	$rootScope.esci = function(){
-		console.log("ciao")
 		sessionStorage.removeItem('utenteLoggato');
 		$route.reload();
 	};
