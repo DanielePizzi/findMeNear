@@ -1,7 +1,7 @@
 angular.module('findMeNearApp.templateComuneModule')
 
 /*DIRETTIVA PER FAR DISEGNARE LA MAPPA A SCHERMO*/
-.directive("appMap", [ '$location', function (location) {
+.directive("appMap", [ '$location', '$rootScope', function (location, rootScope) {
 	//- Documentazione per utilizzare google maps: https://developers.google.com/maps/documentation/
 
 	return {
@@ -23,8 +23,6 @@ angular.module('findMeNearApp.templateComuneModule')
            var toResize, toCenter;
            var map;
            var currentMarkers;
-           
-           console.log(location.url())
 
            // cambia lo scoope dell'aplicazione per cambiare la mappa
            var arr = ["width", "height", "markers", "mapTypeId", "panControl", "zoomControl", "scaleControl"];
@@ -101,22 +99,30 @@ angular.module('findMeNearApp.templateComuneModule')
                
            }
            
+           var markers=[];
+           
+           function setMapOnAll(map) {
+               for (var i = 0; i < markers.length; i++) {
+                 markers[i].setMap(map);
+               }
+               markers = [];
+             }
+           
            /*aggiunta marker dinamicamente*/
            function addMarker(location, map) {
-        	   var markers = [];
+        	   setMapOnAll(null);
         	   var labels = 'A';
         	   var labelIndex = 0;
           		  // Add the marker at the clicked location, and add the next-available label
           		  // from the array of alphabetical characters.
           		  var marker = new google.maps.Marker({
-          			draggable: true,
           		    position: location,
           		    label: labels[labelIndex++ % labels.length],
           		    animation: google.maps.Animation.DROP,
           		    map: map
           		  });
           		  markers.push(marker);
-          		  console.log(markers);
+          		  rootScope.$broadcast('markers',markers)
           	}
 
            // aggiornamento dei markers

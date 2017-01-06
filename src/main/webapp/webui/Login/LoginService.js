@@ -1,4 +1,3 @@
-
 'use strict';
 angular.module('findMeNearApp.LoginModule')
     .service('LoginService', function ($http) {

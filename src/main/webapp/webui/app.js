@@ -9,7 +9,7 @@ angular.module('findMeNearApp',
                                         'findMeNearApp.HomeModule',
                                         'findMeNearApp.LoginModule',
                                         'findMeNearApp.RegisterModule',
-                                        'findMeNearApp.MapsModule'
+                                        'findMeNearApp.MapsModule',
                                     ])
 .config(['$routeProvider',
     function ($routeProvider){
