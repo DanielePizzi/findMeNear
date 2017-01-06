@@ -1,14 +1,15 @@
 angular.module('findMeNearApp.templateComuneModule')
-.controller('templateComuneController', ['$rootScope','$scope', function ($rootScope,$scope) {
-	
+.controller('templateComuneController', [ '$rootScope', '$scope','$location','$route', function ($rootScope,$scope,$location,$route) {
+		
 	/*recupera l'utente loggato al momento della registrazione salvata nelle session-storage*/
-	$scope.utenteLoggato = JSON.parse(JSON.stringify(eval('(' + sessionStorage.getItem('utenteLoggato')+')')));
-	
-	console.log('ciao');
+	if (sessionStorage.length != 0) {
+		$scope.utenteLoggato = JSON.parse(JSON.stringify(eval('(' + sessionStorage.getItem('utenteLoggato')+')')));
+	}
 	
 	$rootScope.esci = function(){
-		console.log('ciao');
+		console.log("ciao")
 		sessionStorage.removeItem('utenteLoggato');
+		$route.reload();
 	};
 	
 }])
