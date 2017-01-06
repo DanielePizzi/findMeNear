@@ -14,8 +14,7 @@ public class SavePointRequest extends StatusResponse {
 	@NotEmpty
 	@NotNull
 	String username;
-	@NotNull
-	@NotEmpty
+
 	Map pointOfInterest;
 	public String getUsername() {
 		return username;

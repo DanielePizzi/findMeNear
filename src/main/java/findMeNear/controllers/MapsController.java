@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import findMeNear.model.request.SavePointRequest;
 import findMeNear.model.response.SavePointResponse;
@@ -17,6 +18,7 @@ import findMeNear.services.IServices;
 import findMeNear.services.impl.ServicesImpl;
 
 @RequestMapping(value = "/maps")
+@RestController
 public class MapsController {
 	
 	private IServices services = new ServicesImpl();
@@ -54,8 +56,8 @@ public class MapsController {
 		String stato = (String) pointLocation.get("stato");
 		HashMap<String,Object> geometry = (HashMap<String, Object>) pointLocation.get("geometry");
 		HashMap<String,Object> location = (HashMap<String, Object>) geometry.get("location");
-		String lat = (String) location.get("lat");
-		String lng = (String) location.get("lng");
+		String lat = location.get("lat").toString();
+		String lng = location.get("lng").toString();
 		String tipo = (String) pointLocation.get("tipo");
 		String descrizione = (String) pointLocation.get("descrizione");
 		

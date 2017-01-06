@@ -11,3 +11,6 @@ angular.module('findMeNearApp.MapsModule')
     	}
            
     });
+
+
+    

@@ -1,7 +1,9 @@
 angular.module('findMeNearApp.MapsModule')
-    .controller('MapsController', ['$rootScope', '$location', 'MapsService', function ($scope,$rootScope, $location, MapsService) {
+    .controller('MapsController', ['$scope','$rootScope', '$location', 'MapsService', function ($scope,$rootScope, $location, MapsService) {
     	
     	console.log(MapsService);
+    	
+    	$scope.utenteLoggato = JSON.parse(JSON.stringify(eval('(' + sessionStorage.getItem('utenteLoggato')+')')));
     	
     	$scope.maps = {
     			loc: { lat: 41.9, lon: 12.416667 },
@@ -22,20 +24,20 @@ angular.module('findMeNearApp.MapsModule')
     	
     	$scope.aggiungiPuntoDiInteresse = function (){
     		var puntoDiInteresse = {
-    			username: $scope.utenteLoggato,
+    			username: $scope.utenteLoggato.nome,
     			pointOfInterest : {
     				nome: $scope.maps.nome,
     				citta: $scope.maps.citta,
     				stato: $scope.maps.stato,
+    				tipo: $scope.maps.categoria,
+    				descrizione: $scope.maps.descrizione,
     				geometry: {
     					location: {
-    						lat: $scope.coordinate.position.lat(),
-    						lng: $scope.coordinate.position.lng(),
+    						lat: $scope.coordinate.position.lat().toString(),
+    						lng: $scope.coordinate.position.lng().toString(),
     					}
     				}
     			},
-    			tipo: $scope.maps.categoria,
-    			descrizione: $scope.maps.descrizione,
     		}
     		console.log(puntoDiInteresse);
     		console.log(MapsService);

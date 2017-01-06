@@ -22,4 +22,9 @@ public class MySQLUserDAO extends SessionFactoryHibernate implements UserDAO{
 				.setParameter("email", email).uniqueResult();
 	}
 	
+	public User getUserName(String nome) {
+		return (User) getSession().createQuery("from User u where u.nome = :nome")
+				.setParameter("nome", nome).uniqueResult();
+	}
+	
 }

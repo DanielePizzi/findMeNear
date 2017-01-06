@@ -105,6 +105,15 @@ public class ServicesImpl implements IServices{
 		logger.debug(String.format("%s - %s::  - parametri in INPUT - fine elenco",CLASS,method));
 		PointDAO pointDAO = mysqlDAOfactory.getPointDAO();
 		
+		UserDAO userDAO = mysqlDAOfactory.getUserDAO();
+		
+		User user = userDAO.getUserName(username);
+		
+		if(user!=null){
+			logger.debug(String.format("%s - %s::inserimento punto di interesse nel db per l'utente[%s]",CLASS,method,user.toString()));
+		}else{
+			logger.debug(String.format("%s - %s::inserimento punto di interesse nel db per l'utente[null]",CLASS,method));
+		}
 		Point point = new Point();
 		
 		point.setNome(nome);
@@ -114,6 +123,9 @@ public class ServicesImpl implements IServices{
 		point.setStato(stato);
 		point.setTipo(tipo);
 		point.setDescrizione(descrizione);
+		point.setUser(user);
+		
+		
 		
 		try{
 			logger.debug(String.format("%s - %s::inserimento punto di interesse nel db",CLASS,method));
