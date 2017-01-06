@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -34,6 +35,8 @@ public class Point {
 	@Column(name="descrizione")
 	private String descrizione;
 	
+	@ManyToOne
+	@JoinColumn(name = "idUser")
 	private User user;
 	
 	public int getId() {
@@ -85,8 +88,6 @@ public class Point {
 		this.descrizione = descrizione;
 	}
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "idUser")
 	public User getUser() {
 		return user;
 	}

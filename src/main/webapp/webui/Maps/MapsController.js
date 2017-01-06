@@ -1,6 +1,8 @@
 angular.module('findMeNearApp.MapsModule')
     .controller('MapsController', ['$rootScope', '$location', 'MapsService', function ($scope,$rootScope, $location, MapsService) {
-    	    	
+    	
+    	console.log(MapsService);
+    	
     	$scope.maps = {
     			loc: { lat: 41.9, lon: 12.416667 },
     			categorie : ["ristoranti","aereoporti","bar","atm","cafe","museo","dottore","palestra","ospedale","farmacia","parcheggio","scuole","università","stazioni del treno"],
@@ -36,6 +38,7 @@ angular.module('findMeNearApp.MapsModule')
     			descrizione: $scope.maps.descrizione,
     		}
     		console.log(puntoDiInteresse);
+    		console.log(MapsService);
     		MapsService.savePoint(puntoDiInteresse).then(function(response){
         		console.log(response.data)
         	})
