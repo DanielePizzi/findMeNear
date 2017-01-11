@@ -27,3 +27,24 @@ angular.module('findMeNearApp.templateComuneModule')
        return deg + "°" + min + "'" + sec + '"' + ew;
    }
 })
+
+.filter('distance', function () {
+	return function (input) {
+		if (input >= 1) {
+			return input.toFixed(2) + 'km';
+		} else {
+			return (input*1000).toFixed(2) + ' m';
+		}
+	}
+})
+
+.filter('open_closed', function () {
+	return function (input) {
+		if (input == false) {
+			return 'Chiuso';
+		} else {
+			return 'Aperto';
+		}
+	}
+})
+

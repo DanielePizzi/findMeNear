@@ -9,15 +9,15 @@ angular.module('findMeNearApp.templateComuneModule')
        replace: true,
        template: "<div></div>",
        scope: {
-           center: "=",        // Center point on the map (e.g. <code>{ latitude: 10, longitude: 10 }</code>).
-           markers: "=",       // Array of map markers (e.g. <code>[{ lat: 10, lon: 10, name: "hello" }]</code>).
-           width: "@",         // Map width in pixels.
-           height: "@",        // Map height in pixels.
-           zoom: "@",          // Zoom level (one is totally zoomed out, 25 is very much zoomed in).
-           mapTypeId: "@",     // Type of tile to show on the map (roadmap, satellite, hybrid, terrain).
-           panControl: "@",    // Whether to show a pan control on the map.
-           zoomControl: "@",   // Whether to show a zoom control on the map.
-           scaleControl: "@"   // Whether to show scale control on the map.
+           center: "=",        // Centro della mappa (es. <code>{ latitude: 10, longitude: 10 }</code>).
+           markers: "=",       // Array di markers (es. <code>[{ lat: 10, lon: 10, name: "hello" }]</code>).
+           width: "@",         // Altezza mappa in pixels.
+           height: "@",        // larghezza mappa in pizel.
+           zoom: "@",          // livello di zoom.
+           mapTypeId: "@",     // Tipo di mappa da far visualizzare (roadmap, satellite, hybrid, terrain).
+           panControl: "@",    // pannello di controllo della mappa.
+           zoomControl: "@",   // visualizza la zoom in mappa
+           scaleControl: "@"   // visualizza la scala della mappa.
        },
        link: function (scope, element, attrs) {
            var toResize, toCenter;
@@ -55,7 +55,7 @@ angular.module('findMeNearApp.templateComuneModule')
                var options =
                {
                    center: new google.maps.LatLng(41.9, -12.416667),
-                   zoom: 11,
+                   zoom: 15,
                    mapTypeId: "roadmap"
                };
                if (scope.center) options.center = getLocation(scope.center);
@@ -113,13 +113,14 @@ angular.module('findMeNearApp.templateComuneModule')
         	   setMapOnAll(null);
         	   var labels = 'A';
         	   var labelIndex = 0;
-          		  // Add the marker at the clicked location, and add the next-available label
-          		  // from the array of alphabetical characters.
           		  var marker = new google.maps.Marker({
           		    position: location,
           		    label: labels[labelIndex++ % labels.length],
           		    animation: google.maps.Animation.DROP,
-          		    map: map
+          		    map: map,
+          		    options: {
+                        animation: google.maps.Animation.BOUNCE
+                    }
           		  });
           		  markers.push(marker);
           		  rootScope.$broadcast('markers',markers)

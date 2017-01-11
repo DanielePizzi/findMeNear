@@ -3,9 +3,9 @@
 <div class="container-fluid">
 <form name="homeForm" class="home"> 
 	<h1 ng-show="utenteLoggato != null">Benvenuto {{utenteLoggato.nome}}</h1>
-    <h2>Google Maps Trovami</h2>
-    <div class="container-fluid"></div>
+     <div class="row">
      <div class="col-xs-12">
+     <h2>Google Maps Trovami</h2>
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Inserisci la località che vuoi cercare" ng-model="search"/>
         <span class="input-group-btn">
@@ -17,32 +17,60 @@
          </button>
        </span>
      </div><!-- input group -->
-  </div><!-- col-xs-12 -->
+  	</div><!-- col-xs-12 -->
+  </div><!-- row -->
   <div class="row">
 	  <div class="col-xs-10">
 	  	<h2>Categorie</h2>
 	  	<label>Scegli una categoria per trovare i punti di interesse a te vicini</label>
-	  	<p><select class="form-control" name="categoria" ng-model="home.categoria" class="categoria">
+	  	<p><select class="form-control barraRicerca" name="categoria" ng-model="home.categoria" class="categoria">
 	  		<option ng-repeat="categoria in home.categorie" value="{{categoria}}">{{categoria}}</option>
 	  	</select></p>
 	  </div><!-- col-xs-10 -->
 	  <div class="col-xs-2">
-	  	<button class="btn btn-primary ricerca" type="button" ng-click="home.ricercaPerCategoria()" value="ricerca">Ricerca</button>
+	  	<button class="btn btn-primary ricerca" type="button" ng-click="home.ricercaPerCategoria()" value="ricerca" ng-disabled="!home.categoria" >Ricerca</button>
 	  </div>
   </div><!-- row -->
-  </div><!-- container-fluid -->
-  <app-map style="height:600px;margin:15px;box-shadow:0 3px 25px black;" center="loc" markers="pointOfInterest"> 
-  </app-map>
-
+  <div class="row">
+  	<div class="col-xs-10 col-xs-offset-1">
+  		<app-map class="mappa" center="loc" markers="pointOfInterest" markers="currentLocation"></app-map>
+  	</div>
+  </div>
   <!-- posizione corrente -->
   <div class="text-info text-right">
     {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
   </div>
-
   <!-- Lista dei punti di interesse -->
   <div class="container-fluid">
-    <div class="btn btn-primary active bottone" ng-repeat="a in pointOfInterest" ng-click="gotoLocation(a.geometry.location.lat, a.geometry.location.lng)">
-    <b>{{a.vicinity}}</b>: {{a.name}}
+    <div class="row tabellaInformazioni" ng-repeat="a in pointOfInterest" ng-click="gotoLocation(a.geometry.location.lat, a.geometry.location.lng)">
+    	<div class="col-xs-2 posizione">
+    		<label class="testoInformativo" >Posizione</label>
+    		<br>
+    		<b>{{$index +1}}</b>
+    	</div><!-- col-xs-2 -->
+    	<div class="col-xs-2">
+    		<label class="testoInformativo">Via</label>
+    		<br>
+    		<b>{{a.vicinity}}</b>
+    	</div><!-- col-xs-2 -->
+    	<div class="col-xs-2">
+    		<label class="testoInformativo">Nome</label>
+    		<br>
+    		<b>{{a.name}}</b>
+    	</div><!-- col-xs-2 -->
+    	<div class="col-xs-2">
+    		<label class="testoInformativo">Distanza</label>
+    		<br>
+    		<b>{{a.distance | distance}}</b>
+    	</div><!-- col-xs-2 -->
+    	<div class="col-xs-2">
+    		<label class="testoInformativo">Stato</label>
+    		<br>
+    		<b>{{a.opening_hours.open_now | open_closed}}</b>
+    	</div><!-- col-xs-2 -->
+    	<div class="col-xs-2">
+    		<img src="{{a.icon}}" height="42" width="42">
+    	</div><!-- col-xs-2 -->
   </div>
   </div>	
 </form>	

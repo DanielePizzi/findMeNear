@@ -39,8 +39,6 @@ angular.module('findMeNearApp.MapsModule')
     				}
     			},
     		}
-    		console.log(puntoDiInteresse);
-    		console.log(MapsService);
     		MapsService.savePoint(puntoDiInteresse).then(function(response){
         		console.log(response.data)
         	})
