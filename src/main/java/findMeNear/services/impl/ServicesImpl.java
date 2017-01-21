@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import com.mysql.fabric.Response;
 
 import findMeNear.model.response.GetPointResponse;
+import findMeNear.model.response.RemovePointResponse;
 import findMeNear.model.utils.PointDistance;
 import findMeNear.persistent.dao.PointDAO;
 import findMeNear.persistent.dao.UserDAO;
@@ -77,9 +78,20 @@ public class ServicesImpl implements IServices{
 		
 		User user = userDAO.getUser(email);
 		
-		if(user != null && !name.equalsIgnoreCase(user.getNome())){
+		if(user != null){
 			
 			logger.debug(String.format("%s - %s:: l'utente esiste [%s]",CLASS,method,user.toString()));
+			logger.debug(String.format("%s - %s:: return true",CLASS,method));
+			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+			logger.debug(String.format("%s - %s::           END",CLASS,method));
+			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+			return true;
+		}
+		
+		User userName = userDAO.getUserName(name);
+		
+		if(userName != null){
+			logger.debug(String.format("%s - %s:: esiste un utente con lo stesso nome[%s]",CLASS,method,user.toString()));
 			logger.debug(String.format("%s - %s:: return true",CLASS,method));
 			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 			logger.debug(String.format("%s - %s::           END",CLASS,method));
@@ -196,6 +208,7 @@ public class ServicesImpl implements IServices{
 		pointLocation.put("citta",point.getCitta());
 		pointLocation.put("stato", point.getStato());
 		pointLocation.put("tipo", point.getTipo());
+		pointLocation.put("id", point.getId());
 		pointLocation.put("descrizione", point.getDescrizione());
 		pointLocation.put("geometry",geometry);
 		pointResponse.setEsito(true);
@@ -207,6 +220,44 @@ public class ServicesImpl implements IServices{
 		logger.debug(String.format("%s - %s::           END",CLASS,method));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		return pointResponse;
+	}
+
+
+	
+	public RemovePointResponse removePoint(int idPoint) {
+		String method = "removePoint";
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.debug(String.format("%s - %s::           START",CLASS,method));
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.debug(String.format("%s - %s::input[%s]",CLASS,method,idPoint));
+		
+		RemovePointResponse pointResponse = new RemovePointResponse();
+		PointDAO pointDAO = mysqlDAOfactory.getPointDAO();
+		
+		Point point = pointDAO.getPoinById(idPoint);
+		
+		if(point == null){
+			pointResponse.setEsito(false);
+			pointResponse.setDescrizione("PUNTO NON TROVATO");
+			logger.debug(String.format("%s - %s::punto non trovato[null]",CLASS,method));
+			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+			logger.debug(String.format("%s - %s::           END",CLASS,method));
+			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		}
+		if(pointDAO.removePointDAO(point)){
+			pointResponse.setEsito(true);
+			pointResponse.setDescrizione("PUNTO RIMOSSO CON SUCCESSO");			
+		}else{
+			pointResponse.setEsito(false);
+			pointResponse.setDescrizione("NON E' STATO POSSIBILE RIMUOVERE IL PUNTO SELEZIONATO");	
+		}
+		
+		
+		logger.debug(String.format("%s - %s::punto piu' vicino[%s]",CLASS,method,point.toString()));
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.debug(String.format("%s - %s::           END",CLASS,method));
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		return null;
 	}
 	
 	

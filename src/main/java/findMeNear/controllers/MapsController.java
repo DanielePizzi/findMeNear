@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import findMeNear.model.request.GetPointRequest;
+import findMeNear.model.request.RemovePointRequest;
 import findMeNear.model.request.SavePointRequest;
 import findMeNear.model.response.GetPointResponse;
+import findMeNear.model.response.RemovePointResponse;
 import findMeNear.model.response.SavePointResponse;
 import findMeNear.services.IServices;
 import findMeNear.services.impl.ServicesImpl;
@@ -81,7 +83,7 @@ public class MapsController {
 	
 	@RequestMapping(value = "/getPoint", method = RequestMethod.POST)
 	@ResponseBody
-public GetPointResponse getPoint(@Valid @RequestBody GetPointRequest request, Errors errors){
+	public GetPointResponse getPoint(@Valid @RequestBody GetPointRequest request, Errors errors){
 		
 		String method = "getPoint";
 		
@@ -116,4 +118,41 @@ public GetPointResponse getPoint(@Valid @RequestBody GetPointRequest request, Er
 		return response;
 	}
 	
+	
+	@RequestMapping(value = "/removePoint", method = RequestMethod.POST)
+	@ResponseBody
+	public RemovePointResponse removePoint(@Valid @RequestBody RemovePointRequest request, Errors errors){
+		
+		String method = "removePoint";
+		
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.debug(String.format("%s - %s::           START",CLASS,method));
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		
+		logger.debug(String.format("%s - %s::input[%s]",CLASS,method,request.toString()));
+		
+		RemovePointResponse response = new RemovePointResponse();
+		if(errors.hasErrors()){
+			response.setEsito(false);
+			response.setDescrizione("INPUT NON VALIDI");
+			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,errors.getAllErrors()));
+			logger.debug(String.format("%s - %s::response[%s]",CLASS,method,response.toString()));
+			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+			logger.debug(String.format("%s - %s::           END",CLASS,method));
+			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+			return response;
+		}
+		try{
+			response = services.removePoint(request.getIdPoint());
+		}catch(Exception e){
+			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,e));
+			response.setEsito(false);
+			response.setDescrizione("ERRORE INTERNO");
+			return response;
+		}
+ 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.debug(String.format("%s - %s::           END",CLASS,method));
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		return response;
+	}
 }

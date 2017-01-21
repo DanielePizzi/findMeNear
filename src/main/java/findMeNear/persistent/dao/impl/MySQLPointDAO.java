@@ -3,6 +3,7 @@ package findMeNear.persistent.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import findMeNear.model.utils.PointDistance;
@@ -11,6 +12,10 @@ import findMeNear.persistent.entity.Point;
 import findMeNear.utils.CalcolaPointNear;
 
 public class MySQLPointDAO extends SessionFactoryHibernate implements PointDAO  {
+	
+	private static final String CLASS = "MySQLPointDAO";
+	
+	Logger logger = Logger.getLogger("FINDMENEAR");
 	
 
 	@Transactional
@@ -29,4 +34,33 @@ public class MySQLPointDAO extends SessionFactoryHibernate implements PointDAO  
 		return CalcolaPointNear.distanceMin(listResult, latitudine, longitudine);
 	}
 
+	@Override
+	@Transactional
+	public boolean removePointDAO(Point point) {
+		String method = "removePointDAO";
+		try{
+			getSession().delete(point);
+			getSession().flush();
+		}catch(Exception e){
+			logger.debug(String.format("%s-%s error[%s]",CLASS,method,e));
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	@Transactional
+	public Point getPoinById(int idPoint) {
+		String method = "getPoinById";
+		Point point = null;
+		try{
+			point = (Point) getSession().createQuery("FROM Point WHERE id = :idPoint")
+					.setParameter("id", idPoint).uniqueResult();			
+		}catch(Exception e){
+			logger.debug(String.format("%s-%s error[%s]",CLASS,method,e));
+			return null;
+		}
+		return point;
+	}
+	
 }
