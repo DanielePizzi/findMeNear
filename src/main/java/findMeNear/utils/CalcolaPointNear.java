@@ -1,10 +1,12 @@
 package findMeNear.utils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import ch.qos.logback.core.read.ListAppender;
 import findMeNear.persistent.entity.Point;
 
 public class CalcolaPointNear {
@@ -19,6 +21,10 @@ public class CalcolaPointNear {
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		logger.debug(String.format("%s - %s::           START",CLASS,method));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.debug(String.format("%s - %s::lista punti[%s]",CLASS,method,listPoint));
+		logger.debug(String.format("%s - %s::latitudine posizione utente[%s]",CLASS,method,latitudine));
+		logger.debug(String.format("%s - %s::longitudine posizione utnete[%s]",CLASS,method, longitudine));
+		logger.debug(String.format("%s - %s::lista punti lunghezza[%s]",CLASS,method,listPoint.size()));
 		
 		if(listPoint == null || listPoint.isEmpty()){
 			logger.debug(String.format("%s - %s:: la lista di input e' vuota",CLASS,method));
@@ -27,8 +33,9 @@ public class CalcolaPointNear {
 		
 		double dmin = -1;
 		Point pointMin = null;
-		while(listPoint.iterator().hasNext()){
-			Point point = listPoint.iterator().next();
+		Iterator<Point> itr = listPoint.iterator();
+		while(itr.hasNext()){
+			Point point = itr.next();
 			double d = distance(latitudine, longitudine, Double.parseDouble(point.getLat()), Double.parseDouble(point.getLng()), 'K');
 			
 			if(dmin == -1 || dmin > d){
