@@ -68,7 +68,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "ristoranti") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=restaurant&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log( $scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) { 
 						$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 					 	}
@@ -80,7 +79,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "aereoporti") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=bar&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -92,7 +90,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "bar") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=airport&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -104,7 +101,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "università") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=university&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -116,7 +112,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "atm") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=atm&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -128,7 +123,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "cafe") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=cafe&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -140,7 +134,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "museo") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=museum&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -152,7 +145,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "dottore") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=doctor&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -164,7 +156,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "palestra") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=gym&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -176,7 +167,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "ospedale") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=hospital&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -188,7 +178,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "farmacia") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=pharmacy&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -200,7 +189,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "parcheggio") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=parking&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -212,7 +200,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "scuole") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=school&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}
@@ -224,7 +211,6 @@ angular.module('findMeNearApp.HomeModule')
 		   if ($scope.home.categoria == "stazioni del treno") {
 			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=train_station&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
 					 $scope.pointOfInterest = response.data.results;
-					 console.log($scope.pointOfInterest);
 					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
 						}

@@ -1,15 +1,79 @@
 <header ng-include="'webui/templateComune/header.html'"></header>
-
-<!-- mappa -->
-<app-map id="map" style="height:600px;margin:15px;box-shadow:0 3px 25px black;" center="maps.loc" markers="maps.pointOfInterestPersonal"> 
-</app-map>
-<form name="mapsForm">  
-   <div class="col-xs-12">
+<div class="container-fluid">
+<form name="mapsForm" class="maps"> 
+<h1>AREA PERSONALE</h1>
+<hr class="spaziatore">
+	<div class="row">
+     	<div class="col-xs-12">
+     	<h2>Inserisci il luogo dove vuoi ritrovare i tuoi punti di interesse</h2>
+	      	<div class="input-group">
+	        	<input type="text" class="form-control" placeholder="Inserisci la località che vuoi cercare" ng-model="search"/>
+	       		 <span class="input-group-btn">
+	         	 <button class="btn btn-primary" type="button" ng-click="geoCode()" ng-disabled="search.length == 0" title="search" >
+	          	 &nbsp;<i class="glyphicon glyphicon-search"></i>
+	         	</button>
+	        	<button class="btn btn-primary" type="button" ng-click="gotoCurrentLocation()" title="current location">
+	          	&nbsp;<i class="glyphicon glyphicon-home"></i>
+	        	</button></span>
+	     	</div><!-- input group -->
+  		</div><!-- col-xs-12 -->
+  	</div><!-- row -->
+  	<div class="row">
+	  <div class="col-xs-10">
+	  	<h2>Categorie</h2>
+	  	<label>Scegli una categoria per trovare i punti di interesse a te vicini</label>
+	  	<p><select class="form-control barraRicerca" name="categoria" ng-model="maps.categoriaPuntiSalvati" class="categoria">
+	  		<option ng-repeat="categoria in maps.categorie" value="{{categoria}}">{{categoria}}</option>
+	  	</select></p>
+	  </div><!-- col-xs-10 -->
+	  <div class="col-xs-2">
+	  	<button class="btn btn-primary ricerca" type="button" ng-click="maps.ricercaPuntoPiuVicino()" value="ricerca" ng-disabled="!maps.categoriaPuntiSalvati" >Ricerca</button>
+	  </div>
+  	</div><!-- row -->
+  	<div class="container-fluid">
+	  	<div class="row tabellaInformazioni" ng-repeat="a in maps.pointOfInterestPersonal" ng-click="gotoLocation(a.geometry.location.lat, a.geometry.location.lng)">
+	    	<div class="col-xs-2 posizione elimina" conferma-Azione="Sei sicuro di voler eliminare questo punto di interesse?" confirmed-click="eliminaPuntoInteresse()">
+	    		<span class="glyphicon glyphicon-trash"></span>
+	    	</div><!-- col-xs-2 -->
+	    	<div class="col-xs-2">
+	    		<label class="testoInformativo">città</label>
+	    		<br>
+	    		<b>{{a.citta}}</b>
+	    	</div><!-- col-xs-2 -->
+	    	<div class="col-xs-2">
+	    		<label class="testoInformativo">Nome</label>
+	    		<br>
+	    		<b>{{a.nome}}</b>
+	    	</div><!-- col-xs-2 -->
+	    	<div class="col-xs-2">
+	    		<label class="testoInformativo">Distanza</label>
+	    		<br>
+	    		<b>{{a.geometry.location.distanza}} km</b>
+	    	</div><!-- col-xs-2 -->
+	    	<div class="col-xs-2">
+	    		<label class="testoInformativo">Stato</label>
+	    		<br>
+	    		<b>{{a.stato}}</b>
+	    	</div><!-- col-xs-2 -->
+	    	<div class="col-xs-2">
+	    		<label class="testoInformativo">Desrizione</label>
+	    		<br>
+	    		<b>{{a.descrizione}}</b>
+	    	</div><!-- col-xs-2 -->
+	    </div> 
+    </div>
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1">
+			<app-map class="mappa" center="maps.loc" markers="maps.pointOfInterestPersonal"> </app-map>
+		</div>
+	</div>
+   <div class="col-xs-12 puntoDiInteresse">
+   <h2>INSERISCI LA DESCRIZIONE DEL PUNTO DI INTERESSE DA AGGIUNGERE</h2>
 	   <div class="panel-group" id="accordion">
 	  	 <div class="panel panel-default">
 		     <div class="panel-heading">
 			     <h4 class="panel-title">
-			       <a data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">Informazioni punto di interesse da aggiungere</a>
+			       <span class="glyphicon glyphicon-exclamation-sign"></span> <a class="accordionPanel" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">Informazioni punto di interesse da aggiungere</a>
 			     </h4>
 		     </div>
 		     <div id="collapseOne" class="panel-collapse collapse in">
@@ -50,6 +114,7 @@
 		   </div><!-- panel panel-default -->
 	   </div><!-- panel-group -->
    </div><!-- col-xs-12 -->
-</form>     
+</form>   
+</div><!-- container fluid -->  
 <div ng-include="'webui/templateComune/footer.html'"></div>
 

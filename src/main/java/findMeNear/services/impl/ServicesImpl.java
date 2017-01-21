@@ -91,7 +91,7 @@ public class ServicesImpl implements IServices{
 		User userName = userDAO.getUserName(name);
 		
 		if(userName != null){
-			logger.debug(String.format("%s - %s:: esiste un utente con lo stesso nome[%s]",CLASS,method,user.toString()));
+			logger.debug(String.format("%s - %s:: esiste un utente con lo stesso nome[%s]",CLASS,method,userName.toString()));
 			logger.debug(String.format("%s - %s:: return true",CLASS,method));
 			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 			logger.debug(String.format("%s - %s::           END",CLASS,method));

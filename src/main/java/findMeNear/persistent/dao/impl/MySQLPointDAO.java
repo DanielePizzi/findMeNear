@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import findMeNear.model.utils.PointDistance;
@@ -38,8 +39,12 @@ public class MySQLPointDAO extends SessionFactoryHibernate implements PointDAO  
 	@Transactional
 	public boolean removePointDAO(Point point) {
 		String method = "removePointDAO";
+		logger.debug(String.format("%s-%s:: inpu%st", CLASS,method,point.toString()));
 		try{
-			getSession().createQuery("DELETE FROM Point WHERE id = "+ point.getId());
+			Query query = getSession().createQuery("DELETE FROM Point WHERE id = "+ point.getId());
+			int deleted = query.executeUpdate();
+			logger.debug(String.format("%s-%s puntiCancellati[%s]",CLASS,method,deleted));
+			if(deleted == 0) return false;
 		}catch(Exception e){
 			logger.debug(String.format("%s-%s error[%s]",CLASS,method,e));
 			return false;

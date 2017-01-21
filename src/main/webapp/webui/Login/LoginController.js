@@ -1,5 +1,5 @@
 angular.module('findMeNearApp.LoginModule')
-    .controller('LoginController', ['$scope', '$rootScope', '$location','LoginService', function ($scope, $rootScope, $location,LoginService) {
+    .controller('LoginController', ['$scope', '$rootScope', '$location','LoginService', '$window',function ($scope, $rootScope, $location,LoginService, $window) {
     	  
     	$scope.login = {};
 
@@ -11,9 +11,10 @@ angular.module('findMeNearApp.LoginModule')
         	LoginService.login(utente).then(function(response){
         		if (response.data.esito == true) {
         			sessionStorage.setItem('utenteLoggato',JSON.stringify(response.data));
+        			$window.alert(response.data.descrizione);
         			$location.path('/home');
 				}else {
-					alert("qualcosa è andato storto");
+					$window.alert(response.data.descrizione);
 				}
         	})
         };

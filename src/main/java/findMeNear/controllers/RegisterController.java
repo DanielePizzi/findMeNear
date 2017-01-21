@@ -59,7 +59,7 @@ public class RegisterController {
 			return response;
 		}
 		response.setEsito(false);
-		response.setDescrizione("UTENTE ESISTENTE");
+		response.setDescrizione("USERNAME O MAIL GIA' ESISTENTI");
 		logger.debug(String.format("%s - %s:: l'utente esiste - response[%s]",CLASS,method,response.toString()));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		logger.debug(String.format("%s - %s::           END",CLASS,method));

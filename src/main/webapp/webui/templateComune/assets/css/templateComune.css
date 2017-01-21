@@ -1,1 +1,2 @@
 .btn[disabled]{cursor:not-allowed; pointer-events: auto;}
+.mappa{height:600px; box-shadow:0 3px 25px black; margin-right:-15px; position: static;}

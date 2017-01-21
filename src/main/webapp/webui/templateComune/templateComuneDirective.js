@@ -111,11 +111,9 @@ angular.module('findMeNearApp.templateComuneModule')
            /*aggiunta marker dinamicamente*/
            function addMarker(location, map) {
         	   setMapOnAll(null);
-        	   var labels = 'A';
         	   var labelIndex = 0;
           		  var marker = new google.maps.Marker({
           		    position: location,
-          		    label: labels[labelIndex++ % labels.length],
           		    animation: google.maps.Animation.DROP,
           		    map: map,
           		    options: {
@@ -178,5 +176,20 @@ angular.module('findMeNearApp.templateComuneModule')
 		            });
 		        }
 		    };
-});
+})
+
+.directive('confermaAzione', [
+	function(){
+		return {
+			link: function (scope, element, attr) {
+				var msg = attr.ngConfirmClick || "Sei sicuro di voler eliminare questo punto di interesse?";
+				var clickAction = attr.confirmedClick;
+				element.bind('click',function (event) {
+					if ( window.confirm(msg) ) {
+						scope.$eval(clickAction)
+					}
+				});
+			}
+		};
+}]);
 

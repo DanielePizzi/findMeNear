@@ -1,5 +1,5 @@
 angular.module('findMeNearApp.RegisterModule')
-    .controller('RegisterController', ['$location', '$scope', 'RegisterService', function ($location, $scope, RegisterService) {
+    .controller('RegisterController', ['$location', '$scope', 'RegisterService', '$window',function ($location, $scope, RegisterService, $window) {
 
     	$scope.register = {};
     	
@@ -14,9 +14,10 @@ angular.module('findMeNearApp.RegisterModule')
     		RegisterService.datiRegistrazione(nuovoUtente).then(function(response){
     			if (response.data.esito == true) {
     				sessionStorage.setItem('utenteLoggato',JSON.stringify(response.data));
+    				$window.alert(response.data.descrizione);
         			$location.path('/home');
 				}else {
-					alert("qualcosa è andato storto");
+					$window.alert(response.data.descrizione);
 				}
     		})
     	}
