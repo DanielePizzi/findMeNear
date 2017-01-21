@@ -72,6 +72,7 @@ public class MapsController {
 			return response;
 		}
 		response.setEsito(true);
+		response.setDescrizione("PUNTO SALVATO CON SUCCESSO");
  		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		logger.debug(String.format("%s - %s::           END",CLASS,method));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));

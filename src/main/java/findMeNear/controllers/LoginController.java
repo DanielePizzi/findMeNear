@@ -69,6 +69,7 @@ private IServices services = new ServicesImpl();
 		}
 		if(CryptPassword.cryptWithMD5(password).equals(result.getPassword())){
 			response.setEsito(true);
+			response.setDescrizione("LOGIN AVVENUTO CON SUCCESSO");
 			response.setToken_sessione(SessionToken.getSessionToken());
 			response.setNome(result.getNome());
 			logger.debug(String.format("%s - %s::user[%s]",CLASS,method,result.toString()));

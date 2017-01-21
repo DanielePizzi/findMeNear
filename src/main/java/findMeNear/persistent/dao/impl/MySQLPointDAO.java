@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import findMeNear.model.utils.PointDistance;
 import findMeNear.persistent.dao.PointDAO;
 import findMeNear.persistent.entity.Point;
 import findMeNear.utils.CalcolaPointNear;
@@ -20,7 +21,7 @@ public class MySQLPointDAO extends SessionFactoryHibernate implements PointDAO  
 
 	@Override
 	@Transactional
-	public Point getPointNear(int idUser ,String categoria, double latitudine, double longitudine) {
+	public PointDistance getPointNear(int idUser ,String categoria, double latitudine, double longitudine) {
 		@SuppressWarnings("unchecked")
 		ArrayList<Point> listResult = ((ArrayList<Point>) getSession().createQuery("FROM Point WHERE Tipo = :categoria AND idUser = :idUser")
 				.setParameter("categoria", categoria).setParameter("idUser", idUser).list());

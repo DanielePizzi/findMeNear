@@ -49,6 +49,7 @@ public class RegisterController {
 		if(!services.isUserExist(email,name)){
 			services.registrazione(name, email, password);
 			response.setEsito(true);
+			response.setDescrizione("REGISTRAZIONE AVVENUTA CON SUCCESSO");
 			response.setToken_sessione(SessionToken.getSessionToken());
 			response.setNome(name);
 			logger.debug(String.format("%s - %s::response[%s]",CLASS,method,response.toString()));

@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import ch.qos.logback.core.read.ListAppender;
+import findMeNear.model.utils.PointDistance;
 import findMeNear.persistent.entity.Point;
 
 public class CalcolaPointNear {
@@ -15,7 +16,7 @@ public class CalcolaPointNear {
 	
 	static Logger logger = Logger.getLogger("FINDMENEAR");
 	
-	public static Point distanceMin(ArrayList<Point> listPoint, double latitudine, double longitudine){
+	public static PointDistance distanceMin(ArrayList<Point> listPoint, double latitudine, double longitudine){
 		String method = "calcolaPoint";
 		
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
@@ -25,6 +26,8 @@ public class CalcolaPointNear {
 		logger.debug(String.format("%s - %s::latitudine posizione utente[%s]",CLASS,method,latitudine));
 		logger.debug(String.format("%s - %s::longitudine posizione utnete[%s]",CLASS,method, longitudine));
 		logger.debug(String.format("%s - %s::lista punti lunghezza[%s]",CLASS,method,listPoint.size()));
+		
+		PointDistance pointDistance = new PointDistance();
 		
 		if(listPoint == null || listPoint.isEmpty()){
 			logger.debug(String.format("%s - %s:: la lista di input e' vuota",CLASS,method));
@@ -52,12 +55,14 @@ public class CalcolaPointNear {
 			return null;
 		}
 		
+		pointDistance.setDistanza(String.valueOf(dmin));
+		pointDistance.setPoint(pointMin);
 		logger.debug(String.format("%s - %s::distanza minima[%s]",CLASS,method,dmin));
 		logger.debug(String.format("%s - %s::punto piu' vicino[%s]",CLASS,method,pointMin.toString()));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		logger.debug(String.format("%s - %s::           END",CLASS,method));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		return pointMin;
+		return pointDistance;
 	}
 	
 	

@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import com.mysql.fabric.Response;
 
 import findMeNear.model.response.GetPointResponse;
+import findMeNear.model.utils.PointDistance;
 import findMeNear.persistent.dao.PointDAO;
 import findMeNear.persistent.dao.UserDAO;
 import findMeNear.persistent.daoFactory.DAOFactory;
@@ -171,19 +172,22 @@ public class ServicesImpl implements IServices{
 			return pointResponse;
 		}
 		
-		Point point = pointDAO.getPointNear(user.getId(),categoria, latitudine, longitudine);
+		PointDistance pointDistance = pointDAO.getPointNear(user.getId(),categoria, latitudine, longitudine);
 		
-		if(point == null){
+		if(pointDistance == null){
 			pointResponse.setEsito(false);
 			pointResponse.setDescrizione("NON CI SONO PUNTI DI INTERESSE A TE VICINI");
 			logger.debug(String.format("%s - %s::point null",CLASS,method));
 			return pointResponse;
 		}
 		
+		Point point = pointDistance.getPoint();
+		
 		logger.debug(String.format("%s-%s:: punto da restituire[%s]",CLASS,method,point.toString()));
 		
 		location.put("lat", Double.parseDouble(point.getLat()));
 		location.put("lng", Double.parseDouble(point.getLng()));
+		location.put("distanza", pointDistance.getDistanza());
 		geometry.put("location", location);
 		pointLocation.put("nome",point.getNome());
 		pointLocation.put("citta",point.getCitta());
