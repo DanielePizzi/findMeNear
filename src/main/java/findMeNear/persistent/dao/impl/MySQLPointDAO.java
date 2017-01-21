@@ -39,8 +39,7 @@ public class MySQLPointDAO extends SessionFactoryHibernate implements PointDAO  
 	public boolean removePointDAO(Point point) {
 		String method = "removePointDAO";
 		try{
-			getSession().delete(point);
-			getSession().flush();
+			getSession().createQuery("DELETE FROM Point WHERE id = "+ point.getId());
 		}catch(Exception e){
 			logger.debug(String.format("%s-%s error[%s]",CLASS,method,e));
 			return false;
