@@ -253,7 +253,7 @@ public class ServicesImpl implements IServices{
 		}
 		
 		
-		logger.debug(String.format("%s - %s::punto piu' vicino[%s]",CLASS,method,point.toString()));
+		logger.debug(String.format("%s - %s::rimozione punto[%s]",CLASS,method,pointResponse.toString()));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		logger.debug(String.format("%s - %s::           END",CLASS,method));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
