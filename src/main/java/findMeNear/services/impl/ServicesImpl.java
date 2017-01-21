@@ -53,9 +53,12 @@ public class ServicesImpl implements IServices{
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		
 		UserDAO userDAO = mysqlDAOfactory.getUserDAO();
+			
 		User user = userDAO.getUser(email);
-		
-		logger.debug(String.format("%s - %s:: user[%s]",CLASS,method,user.toString()));
+
+		if (user != null){
+			logger.debug(String.format("%s - %s:: user[%s]",CLASS,method,user.toString()));			
+		}
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		logger.debug(String.format("%s - %s::           END",CLASS,method));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
