@@ -37,6 +37,14 @@ public class CalcolaPointNear {
 			}
 		}
 		
+		if(dmin >= 40){
+			logger.debug(String.format("%s - %s::punto piu' vicino ad una distanza maggiore di 40 kilometri[%s]",CLASS,method,pointMin.toString()));
+			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+			logger.debug(String.format("%s - %s::           END",CLASS,method));
+			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+			return null;
+		}
+		
 		logger.debug(String.format("%s - %s::distanza minima[%s]",CLASS,method,dmin));
 		logger.debug(String.format("%s - %s::punto piu' vicino[%s]",CLASS,method,pointMin.toString()));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));

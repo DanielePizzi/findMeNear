@@ -173,7 +173,7 @@ public class ServicesImpl implements IServices{
 		
 		if(point == null){
 			pointResponse.setEsito(false);
-			pointResponse.setDescrizione("PUNTO NON TROVATO");
+			pointResponse.setDescrizione("NON CI SONO PUNTI DI INTERESSE A TE VICINI");
 			logger.debug(String.format("%s - %s::point null",CLASS,method));
 			return pointResponse;
 		}
