@@ -180,8 +180,8 @@ public class ServicesImpl implements IServices{
 		
 		logger.debug(String.format("%s-%s:: punto da restituire[%s]",CLASS,method,point.toString()));
 		
-		location.put("lat", point.getLat());
-		location.put("lng", point.getLng());
+		location.put("lat", Double.parseDouble(point.getLat()));
+		location.put("lng", Double.parseDouble(point.getLng()));
 		geometry.put("location", location);
 		pointLocation.put("nome",point.getNome());
 		pointLocation.put("citta",point.getCitta());
