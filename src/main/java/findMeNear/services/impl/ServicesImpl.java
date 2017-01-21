@@ -156,9 +156,9 @@ public class ServicesImpl implements IServices{
 		GetPointResponse pointResponse = new GetPointResponse();
 		PointDAO pointDAO = mysqlDAOfactory.getPointDAO();
 		UserDAO userDAO = mysqlDAOfactory.getUserDAO();
-		HashMap<String,Object> pointLocation = null;
-		HashMap<String,Object> geometry = null;
-		HashMap<String,Object> location = null;
+		HashMap<String,Object> pointLocation = new HashMap<String, Object>();
+		HashMap<String,Object> geometry = new HashMap<String, Object>();
+		HashMap<String,Object> location = new HashMap<String, Object>();
 		
 		User user = userDAO.getUserName(username);
 		
@@ -177,6 +177,8 @@ public class ServicesImpl implements IServices{
 			logger.debug(String.format("%s - %s::point null",CLASS,method));
 			return pointResponse;
 		}
+		
+		logger.debug(String.format("%s-%s:: punto da restituire[%s]",CLASS,method,point.toString()));
 		
 		location.put("lat", point.getLat());
 		location.put("lng", point.getLng());
