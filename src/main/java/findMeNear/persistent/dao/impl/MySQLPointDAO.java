@@ -50,12 +50,12 @@ public class MySQLPointDAO extends SessionFactoryHibernate implements PointDAO  
 
 	@Override
 	@Transactional
-	public Point getPoinById(int idPoint) {
+	public Point getPoinById(int id) {
 		String method = "getPoinById";
 		Point point = null;
 		try{
-			point = (Point) getSession().createQuery("FROM Point WHERE id = :idPoint")
-					.setParameter("id", idPoint).uniqueResult();			
+			point = (Point) getSession().createQuery("FROM Point WHERE id = :id")
+					.setParameter("id", id).uniqueResult();			
 		}catch(Exception e){
 			logger.debug(String.format("%s-%s error[%s]",CLASS,method,e));
 			return null;
