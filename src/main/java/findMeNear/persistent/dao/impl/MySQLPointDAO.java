@@ -20,10 +20,10 @@ public class MySQLPointDAO extends SessionFactoryHibernate implements PointDAO  
 
 	@Override
 	@Transactional
-	public Point getPointNear(int id,String categoria, double latitudine, double longitudine) {
+	public Point getPointNear(int idUser ,String categoria, double latitudine, double longitudine) {
 		@SuppressWarnings("unchecked")
-		ArrayList<Point> listResult = ((ArrayList<Point>) getSession().createQuery("SELECT * FROM Point WHERE Tipo = :categoria AND idUser = :id")
-				.setParameter("categoria", categoria).setParameter("idUser", id).list());
+		ArrayList<Point> listResult = ((ArrayList<Point>) getSession().createQuery("FROM Point WHERE Tipo = :categoria AND idUser = :idUser")
+				.setParameter("categoria", categoria).setParameter("idUser", idUser).list());
 		if(listResult == null || listResult.isEmpty()) return null;
 		return CalcolaPointNear.distanceMin(listResult, latitudine, longitudine);
 	}

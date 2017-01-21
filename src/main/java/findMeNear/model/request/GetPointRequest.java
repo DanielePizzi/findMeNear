@@ -41,5 +41,15 @@ public class GetPointRequest {
 	public void setLongitudine(String longitudine) {
 		this.longitudine = longitudine;
 	}
+	@Override
+	public String toString() {
+		return "GetPointRequest [username=" + username + ", categoria="
+				+ categoria + ", latitudine=" + latitudine + ", longitudine="
+				+ longitudine + ", getUsername()=" + getUsername()
+				+ ", getCategoria()=" + getCategoria() + ", getLatitudine()="
+				+ getLatitudine() + ", getLongitudine()=" + getLongitudine()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
 	
 }

@@ -14,4 +14,17 @@ public class GetPointResponse extends StatusResponse {
 		this.pointOfInterest = pointOfInterest;
 	}
 
+	@Override
+	public String toString() {
+		return "GetPointResponse [pointOfInterest=" + pointOfInterest
+				+ ", esito=" + esito + ", descrizione=" + descrizione
+				+ ", getPointOfInterest()=" + getPointOfInterest()
+				+ ", isEsito()=" + isEsito() + ", getDescrizione()="
+				+ getDescrizione() + ", toString()=" + super.toString()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ "]";
+	}
+	
+	
+
 }
