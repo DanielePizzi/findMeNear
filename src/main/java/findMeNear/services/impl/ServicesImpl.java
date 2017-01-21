@@ -1,6 +1,8 @@
 package findMeNear.services.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -159,7 +161,7 @@ public class ServicesImpl implements IServices{
 		HashMap<String,Object> pointLocation = new HashMap<String, Object>();
 		HashMap<String,Object> geometry = new HashMap<String, Object>();
 		HashMap<String,Object> location = new HashMap<String, Object>();
-		
+		ArrayList<Map> results = new ArrayList<Map>();
 		User user = userDAO.getUserName(username);
 		
 		if(user == null){
@@ -191,7 +193,8 @@ public class ServicesImpl implements IServices{
 		pointLocation.put("geometry",geometry);
 		pointResponse.setEsito(true);
 		pointResponse.setDescrizione("PUNTO PIU' VICINO TROVATO");
-		pointResponse.setPointOfInterest(pointLocation);
+		results.add(pointLocation);
+		pointResponse.setPointOfInterest(results);
 		logger.debug(String.format("%s - %s::punto piu' vicino[%s]",CLASS,method,point.toString()));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		logger.debug(String.format("%s - %s::           END",CLASS,method));

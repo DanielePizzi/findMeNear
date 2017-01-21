@@ -1,16 +1,18 @@
 package findMeNear.model.response;
 
+import java.util.List;
 import java.util.Map;
 
 public class GetPointResponse extends StatusResponse {
 	
-	Map pointOfInterest;
+	
+	List<Map> pointOfInterest;
 
-	public Map getPointOfInterest() {
+	public List getPointOfInterest() {
 		return pointOfInterest;
 	}
 
-	public void setPointOfInterest(Map pointOfInterest) {
+	public void setPointOfInterest(List pointOfInterest) {
 		this.pointOfInterest = pointOfInterest;
 	}
 
