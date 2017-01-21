@@ -1,7 +1,12 @@
 package findMeNear.services.impl;
 
+import java.util.HashMap;
+
 import org.apache.log4j.Logger;
 
+import com.mysql.fabric.Response;
+
+import findMeNear.model.response.GetPointResponse;
 import findMeNear.persistent.dao.PointDAO;
 import findMeNear.persistent.dao.UserDAO;
 import findMeNear.persistent.daoFactory.DAOFactory;
@@ -135,8 +140,65 @@ public class ServicesImpl implements IServices{
 		}
 		logger.debug(String.format("%s - %s::punto di interesse registrato correttamente",CLASS,method));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           START",CLASS,method));
+		logger.debug(String.format("%s - %s::           END",CLASS,method));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		
 	}
+
+
+	@Override
+	public GetPointResponse getPoint(String username, String categoria, double latitudine, double longitudine) {
+		String method = "getPoint";
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.debug(String.format("%s - %s::           START",CLASS,method));
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		
+		GetPointResponse pointResponse = new GetPointResponse();
+		PointDAO pointDAO = mysqlDAOfactory.getPointDAO();
+		UserDAO userDAO = mysqlDAOfactory.getUserDAO();
+		HashMap<String,Object> pointLocation = null;
+		HashMap<String,Object> geometry = null;
+		HashMap<String,Object> location = null;
+		
+		User user = userDAO.getUserName(username);
+		
+		if(user == null){
+			logger.debug(String.format("%s-%s:: user null",CLASS,method));
+			pointResponse.setEsito(false);
+			pointResponse.setDescrizione("UTENTE NON ESISTENTE");
+			return pointResponse;
+		}
+		
+		Point point = pointDAO.getPointNear(user.getId(),categoria, latitudine, longitudine);
+		
+		if(point == null){
+			pointResponse.setEsito(false);
+			pointResponse.setDescrizione("PUNTO NON TROVATO");
+			logger.debug(String.format("%s - %s::point null",CLASS,method));
+			return pointResponse;
+		}
+		
+		location.put("lat", point.getLat());
+		location.put("lng", point.getLng());
+		geometry.put("location", location);
+		pointLocation.put("nome",point.getNome());
+		pointLocation.put("citta",point.getCitta());
+		pointLocation.put("stato", point.getStato());
+		pointLocation.put("tipo", point.getTipo());
+		pointLocation.put("descrizione", point.getDescrizione());
+		pointLocation.put("geometry",geometry);
+		pointResponse.setEsito(true);
+		pointResponse.setDescrizione("PUNTO PIU' VICINO TROVATO");
+		pointResponse.setPointOfInterest(pointLocation);
+		logger.debug(String.format("%s - %s::punto piu' vicino[%s]",CLASS,method,point.toString()));
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.debug(String.format("%s - %s::           END",CLASS,method));
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		return pointResponse;
+	}
+	
+	
+	
+	
+	
 }

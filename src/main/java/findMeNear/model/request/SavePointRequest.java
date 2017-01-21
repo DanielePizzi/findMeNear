@@ -4,12 +4,10 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import findMeNear.model.response.StatusResponse;
 
-public class SavePointRequest extends StatusResponse {
+public class SavePointRequest{
 	
 	@NotEmpty
 	@NotNull

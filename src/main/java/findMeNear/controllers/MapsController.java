@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import findMeNear.model.request.GetPointRequest;
 import findMeNear.model.request.SavePointRequest;
+import findMeNear.model.response.GetPointResponse;
 import findMeNear.model.response.SavePointResponse;
 import findMeNear.services.IServices;
 import findMeNear.services.impl.ServicesImpl;
@@ -61,11 +63,56 @@ public class MapsController {
 		String tipo = (String) pointLocation.get("tipo");
 		String descrizione = (String) pointLocation.get("descrizione");
 		
- 		services.savePoint(request.getUsername(), nome, citta, stato, lat, lng, tipo, descrizione);
- 		response.setEsito(true);
+		try{
+			services.savePoint(request.getUsername(), nome, citta, stato, lat, lng, tipo, descrizione);
+		}catch(Exception e){
+			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,e));
+			response.setEsito(false);
+			response.setDescrizione("ERRORE INTERNO");
+			return response;
+		}
+		response.setEsito(true);
  		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		logger.debug(String.format("%s - %s::           END",CLASS,method));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		return response;
 	}
+	
+	@RequestMapping(value = "/getPoint", method = RequestMethod.POST)
+	@ResponseBody
+public GetPointResponse getPoint(@Valid @RequestBody GetPointRequest request, Errors errors){
+		
+		String method = "getPoint";
+		
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.debug(String.format("%s - %s::           START",CLASS,method));
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		
+		logger.debug(String.format("%s - %s::input[%s]",CLASS,method,request.toString()));
+		
+		GetPointResponse response = new GetPointResponse();
+		if(errors.hasErrors()){
+			response.setEsito(false);
+			response.setDescrizione("INPUT NON VALIDI");
+			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,errors.getAllErrors()));
+			logger.debug(String.format("%s - %s::response[%s]",CLASS,method,response.toString()));
+			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+			logger.debug(String.format("%s - %s::           END",CLASS,method));
+			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+			return response;
+		}
+		try{
+			response = services.getPoint(request.getUsername(),request.getCategoria(), Double.parseDouble(request.getLatitudine()), Double.parseDouble(request.getLongitudine()));
+		}catch(Exception e){
+			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,e));
+			response.setEsito(false);
+			response.setDescrizione("ERRORE INTERNO");
+			return response;
+		}
+ 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.debug(String.format("%s - %s::           END",CLASS,method));
+		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		return response;
+	}
+	
 }

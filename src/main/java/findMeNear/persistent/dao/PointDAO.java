@@ -4,5 +4,5 @@ import findMeNear.persistent.entity.Point;
 
 public interface PointDAO {
 	public void addPoint(Point point);
-	public Point getPoint(String name);
+	public Point getPointNear(int id, String categoria, double latitudine, double longitudine);
 }
