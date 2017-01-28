@@ -42,7 +42,12 @@ angular.module('findMeNearApp',
             .otherwise({ redirectTo: '/home' });
     }
 ])
-// Definisce la path di base del backend
+
+.config(function($httpProvider) {
+	  $httpProvider.defaults.useXDomain = true;
+      $httpProvider.defaults.headers.common['X-Requested-With'];
+})
+
 .constant('BackendCfg',  {
     url: '/findMeNear',
     setupHttp: function(http) {

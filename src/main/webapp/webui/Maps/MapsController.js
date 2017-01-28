@@ -1,5 +1,5 @@
 angular.module('findMeNearApp.MapsModule')
-    .controller('MapsController', ['$scope','$rootScope', '$location', '$http', 'MapsService', '$window', '$anchorScroll',function ($scope, $rootScope, $location, $http,MapsService, $window, $anchorScroll) {
+    .controller('MapsController', ['$scope','$rootScope', '$location', '$http', 'MapsService', '$window', '$anchorScroll', '$q', function ($scope,  $rootScope, $location, $http, MapsService, $window, $anchorScroll, $q) {
     	
     	$scope.utenteLoggato = JSON.parse(JSON.stringify(eval('(' + sessionStorage.getItem('utenteLoggato')+')')));
     	
@@ -8,10 +8,6 @@ angular.module('findMeNearApp.MapsModule')
     			categorie : ["ristoranti","aereoporti","bar","atm","cafe","museo","dottore","palestra","ospedale","farmacia","parcheggio","scuole","università","stazioni del treno"],
     			pointOfInterestPersonal: []
     	}
-    	
-    	// punti di interesse mokkati per farli visualizzare sulla mappa
- 	   // la formattazzione del json è tramite "lat", "lon", e "name" 
- 	  
     	
     	var position = $scope.$on('markers',function(event, args){
     		$scope.coordinate = args[0];
@@ -51,15 +47,19 @@ angular.module('findMeNearApp.MapsModule')
     	
     	// Posizione corrente al momento dell'apertura della macchina
  	   $scope.gotoCurrentLocation = function () {
- 		  $scope.maps.pointOfInterestPersonal = [];
+ 		   var deferred = $q.defer();
  	       if ("geolocation" in navigator) {
  	           navigator.geolocation.getCurrentPosition(function (position) {
  	               var c = position.coords;
+ 	               $scope.coordinate = position;
  	               $scope.gotoLocation(c.latitude, c.longitude);
+ 	               $rootScope.$broadcast('position',position)
+ 	              deferred.resolve(true);
  	           });
- 	           return true;
+ 	       } else {
+ 	    	  deferred.reject(false);
  	       }
- 	       return false;
+ 	      return deferred.promise;
  	   };
  	   $scope.gotoLocation = function (lat, lon) {
  	       if ($scope.lat != lat || $scope.lon != lon) {
@@ -92,11 +92,14 @@ angular.module('findMeNearApp.MapsModule')
  				   latitudine: $scope.maps.loc.lat,
  				   longitudine: $scope.maps.loc.lon
  		   }
- 		  MapsService.getPoint(puntoDiInteresse).then(function(response){
- 			 if (response.data.esito == false) {
- 				$window.alert(response.data.descrizione);
-				}
- 			 $scope.maps.pointOfInterestPersonal = response.data.pointOfInterest
+ 		  $scope.gotoCurrentLocation().then(function(){
+ 			 MapsService.getPoint(puntoDiInteresse).then(function(response){
+ 	 			 if (response.data.esito == false) {
+ 	 				$window.alert(response.data.descrizione);
+ 					}
+ 	 			 $scope.maps.pointOfInterestPersonal = response.data.pointOfInterest
+ 	 			 $scope.gotoCurrentLocation();
+ 	 		  })  
  		  })
  	   }
  	   

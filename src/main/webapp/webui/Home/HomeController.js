@@ -1,5 +1,5 @@
 angular.module('findMeNearApp.HomeModule')
-.controller('HomeController', ['$scope', '$http', '$location', '$anchorScroll', function ($scope, $http, $location, $anchorScroll) {
+.controller('HomeController', ['$scope', '$rootScope','$http', '$location', '$anchorScroll', '$q', function ($scope, $rootScope,$http, $location, $anchorScroll,$q) {
 	
 	$scope.home = {
 		categorie : ["ristoranti","aereoporti","bar","atm","cafe","museo","dottore","palestra","ospedale","farmacia","parcheggio","scuole","università","stazioni del treno"],
@@ -8,21 +8,27 @@ angular.module('findMeNearApp.HomeModule')
 	
 	$scope.utenteLoggato = JSON.parse(JSON.stringify(eval('(' + sessionStorage.getItem('utenteLoggato')+')')));
 	$scope.pointOfInterest = [];
+	$scope.currentLocation = [];
 	
 	
 	// Posizione corrente al momento dell'apertura della macchina
 	   $scope.loc = { lat: 41.9, lon: 12.416667 };
 	   $scope.gotoCurrentLocation = function () {
-		   $scope.pointOfInterest = [];
+		   var deferred = $q.defer();
 	       if ("geolocation" in navigator) {
 	           navigator.geolocation.getCurrentPosition(function (position) {
 	               var c = position.coords;
+	               $scope.coordinate = position;
 	               $scope.gotoLocation(c.latitude, c.longitude);
+	               $rootScope.$broadcast('position',position);
+	               deferred.resolve(true);
 	           });
-	           return true;
+	       } else {
+	    	   deferred.reject(false);
 	       }
-	       return false;
+	       return deferred.promise;
 	   };
+	   
 	   $scope.gotoLocation = function (lat, lon) {
 		   $anchorScroll();
 	       if ($scope.lat != lat || $scope.lon != lon) {
@@ -62,163 +68,179 @@ angular.module('findMeNearApp.HomeModule')
 	        if (unit=="K") { dist = dist * 1.609344 }
 	        if (unit=="N") { dist = dist * 0.8684 }
 	        return dist
-	}
+	   }
 	   
 	   $scope.home.ricercaPerCategoria = function(){
-		   if ($scope.home.categoria == "ristoranti") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=restaurant&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) { 
-						$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-					 	}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-			   		});
-		   }
-		   if ($scope.home.categoria == "aereoporti") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=bar&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+		   $scope.gotoCurrentLocation().then(function(){
+			   if ($scope.home.categoria == "ristoranti") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=restaurant&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) { 
 							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "bar") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=airport&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "università") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=university&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "atm") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=atm&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "cafe") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=cafe&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "museo") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=museum&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "dottore") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=doctor&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "palestra") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=gym&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "ospedale") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=hospital&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "farmacia") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=pharmacy&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "parcheggio") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=parking&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "scuole") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=school&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
-		   if ($scope.home.categoria == "stazioni del treno") {
-			   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=train_station&key=AIzaSyD_jIwf9f9vry_xpbal9RrsV-eIoz1p6ks').then(function(response){
-					 $scope.pointOfInterest = response.data.results;
-					 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
-							$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
-						}
-					 $scope.pointOfInterest.sort(function(a,b){
-						 return parseFloat(a.distance) - parseFloat(b.distance);
-					 })
-				   });
-		   }
+						 	}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+				   		});
+			   }
+			   if ($scope.home.categoria == "aereoporti") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=airport&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "bar") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=bar&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "università") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=university&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "atm") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=atm&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "cafe") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=cafe&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "museo") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=museum&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "dottore") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=doctor&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "palestra") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=gym&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "ospedale") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=hospital&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "farmacia") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=pharmacy&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "parcheggio") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=parking&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "scuole") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=school&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   }
+			   if ($scope.home.categoria == "stazioni del treno") {
+				   $http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+$scope.loc.lat+','+$scope.loc.lon+'&rankby=distance&type=train_station&key=AIzaSyCTjOQbImKsIJ2YIGaNLO5q5mrqRrJ1Qgk').then(function(response){
+						 $scope.pointOfInterest = response.data.results;
+						 $scope.gotoCurrentLocation();
+						 for (var i = 0; i < $scope.pointOfInterest.length; i++) {
+								$scope.pointOfInterest[i].distance = distance($scope.loc.lat, $scope.loc.lon, $scope.pointOfInterest[i].geometry.location.lat, $scope.pointOfInterest[i].geometry.location.lng, 'K');
+							}
+						 $scope.pointOfInterest.sort(function(a,b){
+							 return parseFloat(a.distance) - parseFloat(b.distance);
+						 })
+					   });
+			   } 
+		   });
 	   }
 	   	   
 	}])

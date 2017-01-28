@@ -123,6 +123,63 @@ angular.module('findMeNearApp.templateComuneModule')
           		  markers.push(marker);
           		  rootScope.$broadcast('markers',markers)
           	}
+           
+           var intervall = null;
+           
+           	/*Aggiunta marker posizione attuale*/
+           	rootScope.$on('position',function(event, args){
+           		setMapOnAll(null);
+           		var angle = 0;
+           		var icon = {
+           	            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+           	            scale: 4,
+           	            fillColor: "#ff5050",
+           	            fillOpacity: 1,
+           	            strokeWeight: 1,
+           	            anchor: new google.maps.Point(0, 5),
+           	            rotation: 0 
+           	        };
+           		var colorArray = ["#ff0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"];
+           		var cnt = 0;
+           		var userLatLng = new google.maps.LatLng(args.coords.latitude, args.coords.longitude);
+           		var ptMarker = new google.maps.Marker({
+           	        position: userLatLng,
+           	        map: map,
+           	        icon: {
+           	            url: "https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle.png",
+           	            size: new google.maps.Size(7, 7),
+           	            anchor: new google.maps.Point(4, 4)
+           	        }
+           	    });
+           	    var marker = new google.maps.Marker({
+           	        position: userLatLng,
+           	        icon: icon
+           	    });
+           	    markers.push(marker)
+           	    marker.setMap(map);
+           	    var circleMarker = new google.maps.Marker({
+           	        position: userLatLng,
+           	        map: map,
+           	        icon: {
+           	            path: google.maps.SymbolPath.CIRCLE,
+           	            scale: 24,
+           	            strokeWeight: 2,
+           	            fillColor: '#009933',
+           	            fillOpacity: 0.001,
+           	            anchor: new google.maps.Point(0, 0)
+           	        }
+           	    });
+           	    
+           	    clearInterval(intervall);
+           	    
+           	    var intervall = setInterval(function () {
+           	        angle += 30;
+           	        cnt++;
+           	        icon.rotation = angle;
+           	        icon.fillColor = colorArray[cnt % colorArray.length]
+           	        marker.setIcon(icon);
+           	    }, 1000);
+           	})
 
            // aggiornamento dei markers
            function updateMarkers() {
@@ -146,7 +203,7 @@ angular.module('findMeNearApp.templateComuneModule')
                }
            }
 
-           // converzione della posizione corrente per google maps
+           // conversione della posizione corrente per google maps
            function getLocation(loc) {
                if (loc == null) return new google.maps.LatLng(41.9, 12.416667);
                if (angular.isString(loc)) loc = scope.$eval(loc);
