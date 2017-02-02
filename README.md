@@ -38,5 +38,3 @@ Nella cartella web-app sono presenti le cartelle suddivise per pagina visualizza
 4. Assicurarsi di far puntare le jdk di java (la versione di default di eclipse punta alle JRE nella versione per windows)
 5. generare una propria api key dal seguente sito https://developers.google.com/places/web-service/get-api-key e "sostituirla" nel file script di google nell'index.html(altrimenti la mappa non viene caricata)
 
-## Funzioni Mancanti
- * 
